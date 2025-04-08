@@ -1,0 +1,22 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "lint": "eslint index.js",
+    "lint:all": "eslint \"**/*.js\""
+  },
+  "author": "blurleisure",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+     "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "eslint-config-standard": "^17.1.0",
+    "nodemon": "^3.1.9"
+  }
+}

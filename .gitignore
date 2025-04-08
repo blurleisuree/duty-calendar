@@ -1,0 +1,27 @@
+# Общие игнорируемые файлы для Node.js
+node_modules/          
+*.log                 
+npm-debug.log
+.env                
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
+.env.development
+.env.production
+
+# Для client (React)
+client/build/          # Сборка React
+client/dist/           # Если используется dist
+
+# Для server
+server/dist/           # Скомпилированные файлы сервера
+server/logs/           # Папка с логами
+
+# Временные файлы
+*.swp                  # Временные файлы Vim
+*.bak                  # Резервные копии
+*.tmp                  # Временные файлы
+
+# Системные файлы
+Thumbs.db              # Windows
