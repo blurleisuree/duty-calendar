@@ -1,10 +1,10 @@
 import Input from "../../shared/components/UI/Input/Input";
 import Button from "../../shared/components/UI/Button/Button";
 
-import useApiStore from "../../shared/store/apiStore";
+import dutyApiStore from "../../shared/store/dutyStore";
 
 function Inner() {
-  const { duties, addNewDuties, getDuties } = useApiStore();
+  const { duties, addNewDuties, getDutiesByOrganization, getDutiesByDate } = dutyApiStore();
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -12,8 +12,7 @@ function Inner() {
   };
 
   const onClick = async () => {
-    await getDuties();
-    console.log(duties)
+    console.log(getDutiesByDate());
   };
 
   return (
@@ -39,7 +38,7 @@ function Inner() {
         </Button>
       </form>
       <Button onClick={onClick} className="mt-4">
-        getDuties
+        fetchDuties
       </Button>
     </div>
   );
