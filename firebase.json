@@ -20,7 +20,7 @@
     }
   ],
   "hosting": {
-    "public": "public",
+  "public": "client/dist",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -31,6 +31,9 @@
         "source": "**",
         "destination": "/index.html"
       }
+    ],
+    "predeploy": [
+    "cd client && npm ci && npm run build"
     ]
   },
   "emulators": {
