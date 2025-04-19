@@ -36,10 +36,24 @@ const useDutyStore = create((set) => ({
       : null;
   },
 
-  // getDuties: (organization, date) => {
-  //   const duties = useDutyStore.getState().duties;
-  //   if (!Array.isArray(duties)) return [];
-  // },
+  getDuties: (organization, date) => {
+    const duties = useDutyStore.getState().duties;
+    if (!Array.isArray(duties)) return [];
+
+    let filteredDuties = duties;
+
+    if (organization) {
+      filteredDuties = filteredDuties.filter(
+        (duty) => duty.organization === organization
+      );
+    }
+
+    if (date) {
+      filteredDuties = filteredDuties.filter((duty) => duty.date === date);
+    }
+
+    return filteredDuties;
+  },
 
   addNewDuties: async (event) => {
     set({ isLoading: true, error: null });
