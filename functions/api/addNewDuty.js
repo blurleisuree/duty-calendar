@@ -40,12 +40,17 @@ const addNewDuty = onRequest({ cors: true, region: "europe-north1"  }, (req, res
       const workbook = XLSX.read(fileData, { type: "buffer" });
       const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
-      const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+      const data = XLSX.utils.sheet_to_json(worksheet, {
+        header: 1,
+        raw: false,
+        dateNF: "dd.mm.yy", // Формат даты
+        cellDates: true, // Убедимся, что даты парсятся как даты
+      });
 
       // Пропускаем заголовок (1-я строка) и обрабатываем данные
       const duties = data.slice(1).map((row) => ({
         organization: row[0] ?? null,
-        date: row[1] ?? null,
+        date: row[1] ? String(row[1]).replace(/\//g, ".") : null, // Заменяем слэши на точки
         timeStart: row[2] ?? null,
         timeEnd: row[3] ?? null, 
         fullName: row[4] ?? null,
