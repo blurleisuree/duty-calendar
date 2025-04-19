@@ -7,6 +7,27 @@ const os = require("os");
 const path = require("path");
 const fs = require("fs");
 
+const convertToISODate = (dateValue) => {
+  let date;
+  
+  // Если dateValue — число (серийный номер Excel)
+  if (typeof dateValue === "number") {
+    const excelEpoch = new Date(1899, 11, 30); // Начало отсчета в Excel
+    date = new Date(excelEpoch.getTime() + dateValue * 24 * 60 * 60 * 1000);
+  }
+
+  // Если формат неизвестен, возвращаем null
+  else {
+    return null;
+  }
+
+  // Преобразуем в ISO-формат "YYYY-MM-DD"
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  return `${year}-${month}-${day}`; // Например, "2024-12-29"
+};
+
 const addNewDuty = onRequest({ cors: true, region: "europe-north1"  }, (req, res) => {
   if (req.method !== "POST") {
     logger.error("Method not allowed", { method: req.method });
@@ -36,21 +57,17 @@ const addNewDuty = onRequest({ cors: true, region: "europe-north1"  }, (req, res
 
   busboy.on("finish", async () => {
     try {
-      // Парсим Excel
       const workbook = XLSX.read(fileData, { type: "buffer" });
       const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
       const data = XLSX.utils.sheet_to_json(worksheet, {
         header: 1,
-        raw: false,
-        dateNF: "dd.mm.yy", // Формат даты
-        cellDates: true, // Убедимся, что даты парсятся как даты
       });
 
       // Пропускаем заголовок (1-я строка) и обрабатываем данные
       const duties = data.slice(1).map((row) => ({
         organization: row[0] ?? null,
-        date: row[1] ? String(row[1]).replace(/\//g, ".") : null, // Заменяем слэши на точки
+        date: row[1] ? convertToISODate(row[1]) : null, // Конвертируем дату в ISO-формат
         timeStart: row[2] ?? null,
         timeEnd: row[3] ?? null, 
         fullName: row[4] ?? null,
