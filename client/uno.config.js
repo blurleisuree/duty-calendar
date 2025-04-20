@@ -9,12 +9,11 @@ export default defineConfig({
   ],
   theme: {
     colors: {
-      primary: "#FDFAF9",
-      secondary: "#21B5F1",
-      accent: "#ED3097",
-      background: "#030712",
-      neutral: "#30343F",
-      button: "#30343F",
+      primary: "#293553",
+      active: "#0083FF",
+      secondary: "#4FE09C",
+      neutral: "#77838B",
+      line: "#ACACAC",
     },
   },
 });

@@ -6,6 +6,8 @@ import useDutyStore from "../../store/dutyStore";
 
 import OrgSelectorElem from "./OrgSelectorElem/OrgSelectorElem";
 
+import arrow from "../../../assets/icons/activeBottom.svg";
+
 function OrgSelector() {
   const [dropDownIsActive, setDropDownIsActive] = useState(false);
 
@@ -21,22 +23,10 @@ function OrgSelector() {
   }, [getAllOrgs, duties]);
 
   return (
-    <div className="relative h-min" onClick={toggleDropDown}>
-      <div className="inline-flex items-center w-full justify-center text-lg font-400 text-primary cursor-pointer">
+    <div className="relative h-min mt-7" onClick={toggleDropDown}>
+      <div className="inline-flex items-center w-full justify-center text-xl text-active font-300 cursor-pointer">
         {activeOrg}
-        <svg
-          className=" size-6 text-gray-400"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          aria-hidden="true"
-          data-slot="icon"
-        >
-          <path
-            fillRule="evenodd"
-            d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
-            clipRule="evenodd"
-          />
-        </svg>
+        <img src={arrow} alt="arrow" className="ml-1" />
       </div>
 
       {dropDownIsActive && orgs.length > 0 && (
@@ -44,7 +34,7 @@ function OrgSelector() {
           <div className="fixed inset-0 z-40" onClick={toggleDropDown} />
 
           <div
-            className={`block absolute right-0 mt-5 py-4 w-max bg-white rounded-lg z-50 ${classes.popup}`}
+            className={`block absolute mt-5 py-4 w-max bg-white rounded-lg z-50 ${classes.popup}`}
           >
             {orgs.map((org, index) => (
               <OrgSelectorElem

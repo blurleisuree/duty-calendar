@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router";
-import arrow from "../../../../assets/icons/arrow-left-white.svg";
 
-function ReturnArrow({ children }) {
+import arrow from '../../../../assets/icons/arrowLeft.svg'
+
+function ReturnElem({ children }) {
   const navigate = useNavigate();
 
   const handleGoBack = () => {
@@ -11,9 +12,9 @@ function ReturnArrow({ children }) {
   return (
     <button onClick={handleGoBack} className="flex items-center justify-between cursor-pointer">
       <img src={arrow} alt="arrow" />
-      <span className="text-2xl text-primary ml-2">{children}</span>
+      <span className="text-xl text-active font-300 ml-2">{children}</span>
     </button>
   );
 }
 
-export default ReturnArrow;
+export default ReturnElem;

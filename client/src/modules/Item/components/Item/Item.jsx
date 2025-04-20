@@ -3,9 +3,9 @@ import { useParams } from "react-router";
 
 import useOrgStore from "../../../../shared/store/orgStore";
 import useDutyStore from "../../../../shared/store/dutyStore";
-import useValidateIsoDate from "../../hooks/useValidateISODate";
+import useValidateIsoDate from "../../../../shared/hooks/useValidateISODate";
 
-import ReturnArrow from "../ReturnArrow/ReturnArrow";
+// import ReturnArrow from "../ReturnArrow/ReturnArrow";
 import DateTitle from "../DateTitle/DateTitle";
 import ItemData from "../ItemData/ItemData";
 
@@ -33,9 +33,9 @@ function Item() {
 
   return (
     <div>
-      <ReturnArrow>{date.slice(0, 4)}</ReturnArrow>
-      <DateTitle day={day} date={date} />
-      <ItemData />
+      {/* <ReturnArrow>{date.slice(0, 4)}</ReturnArrow> */}
+      {/* <DateTitle day={day} date={date} /> */}
+      {/* <ItemData /> */}
     </div>
   );
 }
