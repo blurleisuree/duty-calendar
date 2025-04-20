@@ -1,8 +1,8 @@
 .App {
-    background-color: #030712;
-    width: 100wh;
-    height: 100vh;
-    overflow: hidden;
-    font-family: "Montserrat", sans-serif;
-    font-optical-sizing: auto;
+  background-color: #fff;
+  width: 100wh;
+  height: 100vh;
+  overflow: hidden;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
 }

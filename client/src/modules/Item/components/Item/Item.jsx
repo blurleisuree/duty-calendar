@@ -7,6 +7,7 @@ import useValidateIsoDate from "../../hooks/useValidateISODate";
 
 import ReturnArrow from "../ReturnArrow/ReturnArrow";
 import DateTitle from "../DateTitle/DateTitle";
+import ItemData from "../ItemData/ItemData";
 
 function Item() {
   const activeOrg = useOrgStore((state) => state.activeOrg);
@@ -34,6 +35,7 @@ function Item() {
     <div>
       <ReturnArrow>{date.slice(0, 4)}</ReturnArrow>
       <DateTitle day={day} date={date} />
+      <ItemData />
     </div>
   );
 }
