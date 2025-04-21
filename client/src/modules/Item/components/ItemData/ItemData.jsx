@@ -43,7 +43,7 @@ function ItemData({ duty }) {
           {isDetailsActive && <Time time={duty.timeEnd}></Time>}
         </div>
       </div>
-      <Border handleClick={toggleIsDetailsActive} />
+      <Border handleClick={toggleIsDetailsActive} isDetailsActive={isDetailsActive}/>
     </>
   );
 }
