@@ -20,7 +20,7 @@ function App() {
 
   return (
     <div className={`${classes.App}`}>
-       <Message />
+      <Message />
       <Router />
     </div>
   );
