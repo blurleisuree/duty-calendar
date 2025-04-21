@@ -10,7 +10,7 @@ function Header() {
   const { date } = useParams();
 
   return (
-    <div className="flex flex-col w-screen pt-9 pb-9 px-5 border-b border-b-line">
+    <div className="flex flex-col w-screen pt-9 pb-7 px-5 border-b border-b-line">
       <div className="flex items-center justify-between">
         <div className="flex-1 flex justify-start">
           {date && <ReturnElem>{date.slice(0, 4)}</ReturnElem>}

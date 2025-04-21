@@ -1,9 +1,12 @@
-function Phone({className, children}) {
+function Phone({ className, children }) {
   return (
-    <p className={`${className} text-active underline cursor-pointer text-lg `}>
-    {children}
-    </p>
-  )
+    <a
+      href={"tel:" + children}
+      className={`${className} text-active underline cursor-pointer text-lg `}
+    >
+      {children}
+    </a>
+  );
 }
 
-export default Phone
+export default Phone;

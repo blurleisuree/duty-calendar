@@ -6,7 +6,7 @@ function DateTitle({ day, date }) {
   });
 
   return (
-    <h3 className="text-primary text-xl text-center mt-7 border-b-line border-b pb-7">
+    <h3 className="text-primary text-lg text-center mt-4 border-b-line border-b pb-4">
       {day} – {localDate}
     </h3>
   );

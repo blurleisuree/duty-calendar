@@ -15,15 +15,14 @@ function Item() {
   const { date } = useParams();
   const isDateValid = !useValidateIsoDate(date);
 
-const [filteredDuties, setFilteredDuties] = useState(null)
+  const [filteredDuties, setFilteredDuties] = useState(null);
 
   useEffect(() => {
     if (isDateValid) return;
 
-    setFilteredDuties(getDuties(
-      activeOrg === "Все организации" ? "" : activeOrg,
-      date
-    ));
+    setFilteredDuties(
+      getDuties(activeOrg === "Все организации" ? "" : activeOrg, date)
+    );
   }, [activeOrg, date, getDuties, isDateValid]);
 
   if (isDateValid)
@@ -32,11 +31,12 @@ const [filteredDuties, setFilteredDuties] = useState(null)
   const day = "Суббота";
 
   return (
-    <div>
+    <div className="pb-10">
       <DateTitle day={day} date={date} />
-      {filteredDuties && filteredDuties.map((duty, index) => {
-        return <ItemData duty={duty} key={duty.id || index}/>
-      })}
+      {filteredDuties &&
+        filteredDuties.map((duty, index) => {
+          return <ItemData duty={duty} key={duty.id || index} />;
+        })}
     </div>
   );
 }
