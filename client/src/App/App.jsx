@@ -5,6 +5,8 @@ import Router from "./components/Router/Router.jsx";
 
 import { useEffect } from "react";
 import useDutyStore from "../shared/store/dutyStore.js";
+import Loader from "../shared/components/UI/Loader/Loader.jsx";
+import Message from "../shared/components/Message/Message.jsx";
 
 function App() {
   const fetchDuties = useDutyStore((state) => state.fetchDuties);
@@ -14,10 +16,11 @@ function App() {
     fetchDuties();
   }, [fetchDuties]);
 
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading) return <Loader fullPage={true} />;
 
   return (
     <div className={`${classes.App}`}>
+       <Message />
       <Router />
     </div>
   );

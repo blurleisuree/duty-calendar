@@ -4,13 +4,17 @@ import SubText from "../../../../shared/components/UI/SubText/SubText";
 import Error from "../../../../shared/components/UI/Error/Error";
 
 import dutyApiStore from "../../../../shared/store/dutyStore";
+import useMessageStore from "../../../../shared/store/messageStore";
 
 function Admin() {
-  const { addNewDuties, error, loading } = dutyApiStore();
+  const { addNewDuties, error } = dutyApiStore();
 
-  const onSubmit = (event) => {
+  const addMessage = useMessageStore((state) => state.addMessage);
+  const onSubmit = async (event) => {
     event.preventDefault();
-    addNewDuties(event);
+    const res = await addNewDuties(event);
+    console.log(res.message)
+    addMessage(res.message);
   };
 
   return (

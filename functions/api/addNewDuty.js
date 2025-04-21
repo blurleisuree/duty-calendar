@@ -100,7 +100,7 @@ const addNewDuty = onRequest({ cors: true, region: "europe-north1"  }, (req, res
         fs.unlinkSync(filePath);
       }
 
-      res.status(200).json({ success: true, message: "Old data removed and new data uploaded to Firestore" });
+      res.status(200).json({ success: true, message: "Данные успешно обновлены" });
     } catch (error) {
       logger.error("Error processing file", { error: error.message });
       res.status(500).json({ success: false, error: "Failed to process file" });

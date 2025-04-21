@@ -5,6 +5,8 @@ import Calendar from "../../pages/CalendarWrapper/CalendarWrapper";
 import Item from "../../pages/ItemWrapper/ItemWrapper";
 import AdminWrapper from "../../pages/AdminWrapper/AdminWrapper";
 
+import Loader from "../../shared/components/UI/Loader/Loader";
+
 export const routeConfig = [
   {
     path: "/",
