@@ -4,7 +4,7 @@ import Logo from "../../../../shared/components/UI/Logo/Logo";
 
 import upload from "../../../../assets/icons/upload.svg";
 
-import { useParams } from "react-router";
+import { useParams, Link } from "react-router";
 
 function Header() {
   const { date } = useParams();
@@ -15,9 +15,9 @@ function Header() {
         <div className="flex-1 flex justify-start">
           {date && <ReturnElem>{date.slice(0, 4)}</ReturnElem>}
         </div>
-        <div className="flex-0">
-          <Logo type="mini" className='cursor-pointer'/>
-        </div>
+        <Link to="/" className="flex-0">
+          <Logo type="mini" className="cursor-pointer" />
+        </Link>
         <div className="flex-1 flex justify-end">
           <img src={upload} alt="uploadIcon" className="w-4 cursor-pointer" />
         </div>
