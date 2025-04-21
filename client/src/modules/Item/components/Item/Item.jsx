@@ -1,11 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
 import useOrgStore from "../../../../shared/store/orgStore";
 import useDutyStore from "../../../../shared/store/dutyStore";
 import useValidateIsoDate from "../../../../shared/hooks/useValidateISODate";
 
-// import ReturnArrow from "../ReturnArrow/ReturnArrow";
 import DateTitle from "../DateTitle/DateTitle";
 import ItemData from "../ItemData/ItemData";
 
@@ -16,14 +15,15 @@ function Item() {
   const { date } = useParams();
   const isDateValid = !useValidateIsoDate(date);
 
+const [filteredDuties, setFilteredDuties] = useState(null)
+
   useEffect(() => {
     if (isDateValid) return;
 
-    const filteredDuties = getDuties(
+    setFilteredDuties(getDuties(
       activeOrg === "Все организации" ? "" : activeOrg,
       date
-    );
-    console.log(filteredDuties);
+    ));
   }, [activeOrg, date, getDuties, isDateValid]);
 
   if (isDateValid)
@@ -33,9 +33,10 @@ function Item() {
 
   return (
     <div>
-      {/* <ReturnArrow>{date.slice(0, 4)}</ReturnArrow> */}
-      {/* <DateTitle day={day} date={date} /> */}
-      {/* <ItemData /> */}
+      <DateTitle day={day} date={date} />
+      {filteredDuties && filteredDuties.map((duty, index) => {
+        return <ItemData duty={duty} key={duty.id || index}/>
+      })}
     </div>
   );
 }

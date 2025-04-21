@@ -13,7 +13,7 @@ export default defineConfig({
       active: "#0083FF",
       secondary: "#4FE09C",
       neutral: "#77838B",
-      line: "#ACACAC",
+      line: "#acacac",
     },
   },
 });
