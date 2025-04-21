@@ -13,7 +13,6 @@ function Day({ day }) {
     return () => {
       if (day) {
         const formattedDay = format(day, "yyyy-MM-dd");
-        console.log(formattedDay);
         navigate(`/calendar/${formattedDay}`);
       }
     };

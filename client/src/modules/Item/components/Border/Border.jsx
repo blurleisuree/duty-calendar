@@ -14,7 +14,7 @@ function Border({ handleClick, isDetailsActive }) {
         <img
           src={arrow}
           alt="arrow"
-          className={isDetailsActive && " transform-rotate-180"}
+          className={isDetailsActive ? " transform-rotate-180" : ''}
         />
       </div>
       <div className={`${classes.line} bg-line flex-1`}></div>
