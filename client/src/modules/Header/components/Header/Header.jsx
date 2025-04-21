@@ -17,14 +17,14 @@ function Header() {
           {date && <ReturnElem path="/calendar">{date.slice(0, 4)}</ReturnElem>}
           {url === "/admin" && <ReturnElem path="-1"></ReturnElem>}
         </div>
-        <Link to="/" className="flex-0">
+        <Link to="/calendar" className="flex-0">
           <Logo type="mini" className="cursor-pointer" />
         </Link>
         <Link to="/admin" className="flex-1 flex justify-end">
           <img src={upload} alt="uploadIcon" className="w-4 cursor-pointer" />
         </Link>
       </div>
-      {!url === "/admin" && <OrgSelector />}
+      {!(url === "/admin") && <OrgSelector />}
     </div>
   );
 }
