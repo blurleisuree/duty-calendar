@@ -11,7 +11,7 @@ function DateTitle({ date }) {
   });
 
   return (
-    <h3 className="text-primary text-lg text-center mt-4 border-b-line border-b pb-4">
+    <h3 className="text-primary text-lg text-center mt-4 border-b-line border-b pb-4 capitalize">
       {dayOfWeekName} – {localDate}
     </h3>
   );

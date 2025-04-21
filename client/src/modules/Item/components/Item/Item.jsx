@@ -7,6 +7,7 @@ import useValidateIsoDate from "../../../../shared/hooks/useValidateISODate";
 
 import DateTitle from "../DateTitle/DateTitle";
 import ItemData from "../ItemData/ItemData";
+import EmptyData from "../EmptyData/EmptyData";
 
 function Item() {
   const activeOrg = useOrgStore((state) => state.activeOrg);
@@ -15,7 +16,7 @@ function Item() {
   const { date } = useParams();
   const isDateValid = !useValidateIsoDate(date);
 
-  const [filteredDuties, setFilteredDuties] = useState(null);
+  const [filteredDuties, setFilteredDuties] = useState([]);
 
   useEffect(() => {
     if (isDateValid) return;
@@ -28,15 +29,17 @@ function Item() {
   if (isDateValid)
     return <p className="text-2xl text-primary">Неправильный формат даты</p>;
 
-  const day = "Суббота";
-
+  
   return (
     <div className="pb-10">
-      <DateTitle day={day} date={date} />
-      {filteredDuties &&
+      <DateTitle date={date} />
+      {filteredDuties.length ? (
         filteredDuties.map((duty, index) => {
           return <ItemData duty={duty} key={duty.id || index} />;
-        })}
+        })
+      ) : (
+        <EmptyData />
+      )}
     </div>
   );
 }
