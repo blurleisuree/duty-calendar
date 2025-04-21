@@ -8,6 +8,7 @@ import useValidateIsoDate from "../../../../shared/hooks/useValidateISODate";
 import DateTitle from "../DateTitle/DateTitle";
 import ItemData from "../ItemData/ItemData";
 import EmptyData from "../EmptyData/EmptyData";
+import ErrorPath from "../ErrorPath/ErrorPath";
 
 function Item() {
   const activeOrg = useOrgStore((state) => state.activeOrg);
@@ -26,10 +27,8 @@ function Item() {
     );
   }, [activeOrg, date, getDuties, isDateValid]);
 
-  if (isDateValid)
-    return <p className="text-2xl text-primary">Неправильный формат даты</p>;
+  if (isDateValid) return <ErrorPath />;
 
-  
   return (
     <div className="pb-10">
       <DateTitle date={date} />
