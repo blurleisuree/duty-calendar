@@ -2,11 +2,11 @@ import { useNavigate } from "react-router";
 
 import arrow from '../../../../assets/icons/arrowLeft.svg'
 
-function ReturnElem({ children }) {
+function ReturnElem({ children, path }) {
   const navigate = useNavigate();
 
   const handleGoBack = () => {
-    navigate("/calendar");
+    navigate(path);
   };
 
   return (

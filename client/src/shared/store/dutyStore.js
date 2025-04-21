@@ -69,6 +69,7 @@ const useDutyStore = create((set) => ({
       );
       const result = await response.json();
       console.log(result);
+      set({ isLoading: false });
     } catch (error) {
       set({ error: error.message, isLoading: false });
     }
