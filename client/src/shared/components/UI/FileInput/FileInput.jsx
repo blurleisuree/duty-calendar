@@ -1,6 +1,6 @@
-import classes from "./Input.module.css";
+import classes from "./FileInput.module.css";
 
-function Input({
+function FileInput({
   className,
   children,
   placeholder,
@@ -28,4 +28,4 @@ function Input({
   );
 }
 
-export default Input;
+export default FileInput;

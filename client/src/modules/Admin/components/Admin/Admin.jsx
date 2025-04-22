@@ -1,4 +1,4 @@
-import Input from "../../../../shared/components/UI/Input/Input";
+import FileInput from "../../../../shared/components/UI/FileInput/FileInput";
 import Button from "../../../../shared/components/UI/Button/Button";
 import SubText from "../../../../shared/components/UI/SubText/SubText";
 import Error from "../../../../shared/components/UI/Error/Error";
@@ -25,7 +25,7 @@ function Admin() {
         className="w-full"
         onSubmit={(event) => onSubmit(event)}
       >
-        <Input
+        <FileInput
           id="excelFile"
           name="excelFile"
           type="file"
@@ -33,7 +33,7 @@ function Admin() {
           accept=".xlsx, .xls"
         >
           Добавьте файл
-        </Input>
+        </FileInput>
         <SubText className="mt-2 font-light text-sm">
           xlsx, xls (макс. 3MB)
         </SubText>

@@ -5,7 +5,7 @@ function Button({ children, type, className, onClick }) {
     <button
       onClick={onClick}
       type={type}
-      className={`${className} ${classes.btn} cursor-pointer text-white hover:opacity-50 font-400 text-sm px-10 py-2 block focus:outline-none`}
+      className={`${className} ${classes.btn} cursor-pointer text-white transition hover:opacity-50 font-400 text-sm px-10 py-2 block focus:outline-none`}
     >
       {children}
     </button>

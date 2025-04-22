@@ -6,7 +6,7 @@ function Logo({ className, type = 'logoMini'}) {
     mini: logoMini,
     full: logoFull,
   };
-
+  
   const logoLink = logoMap[type] || logoMini;
 
   return <img className={`${className} min-w-10`} alt="Logo" src={logoLink} />;
