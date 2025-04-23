@@ -9,8 +9,8 @@ import AuthPage from "../../pages/AuthPage/AuthPage";
 import { PublicRoute, ProtectedRoute } from "../../modules/Auth";
 
 import AdminWrapper from "../../pages/AdminWrapper/AdminWrapper";
-import AdminAuthWrapper from "../../pages/AdminAuthWrapper/AdminAuthWrapper";
-import { AdminProtectedRoute, AdminPublicRoute } from "../../modules/Admin";
+// import AdminAuthWrapper from "../../pages/AdminAuthWrapper/AdminAuthWrapper";
+// import { AdminProtectedRoute, AdminPublicRoute } from "../../modules/Admin";
 
 import Loader from "../../shared/components/UI/Loader/Loader";
 
@@ -38,24 +38,25 @@ export const routeConfig = [
           { path: "", element: <Navigate to={`calendar/${today}`} replace /> },
           { path: "calendar", element: <Calendar /> },
           { path: "calendar/:date", element: <Item /> },
-          {
-            element: <AdminPublicRoute />,
-            children: [
-              {
-                path: "admin/auth",
-                element: <AdminAuthWrapper />,
-              },
-            ],
-          },
-          {
-            element: <AdminProtectedRoute />,
-            children: [
-              {
-                path: "admin",
-                element: <AdminWrapper />,
-              },
-            ],
-          },
+          { path: "admin", element: <AdminWrapper /> },
+          // {
+          //   element: <AdminPublicRoute />,
+          //   children: [
+          //     {
+          //       path: "admin/auth",
+          //       element: <AdminAuthWrapper />,
+          //     },
+          //   ],
+          // },
+          // {
+          //   element: <AdminProtectedRoute />,
+          //   children: [
+          //     {
+          //       path: "admin",
+          //       element: <AdminWrapper />,
+          //     },
+          //   ],
+          // },
         ],
       },
     ],

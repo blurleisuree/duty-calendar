@@ -2,16 +2,19 @@ import FileInput from "../../../../shared/components/UI/FileInput/FileInput";
 import Button from "../../../../shared/components/UI/Button/Button";
 import SubText from "../../../../shared/components/UI/SubText/SubText";
 import Error from "../../../../shared/components/UI/Error/Error";
+import ErrorAdmin from "../ErrorAdmin/ErrorAdmin";
 
 import dutyApiStore from "../../../../shared/store/dutyStore";
 import useMessageStore from "../../../../shared/store/messageStore";
-import useAdminStore from "../../store/adminStore";
+// import useAdminStore from "../../store/adminStore";
+import useAuthStore from "../../../Auth/store/authStore";
 
-import useOpenExitModal from '../../../../shared/hooks/useOpenExitModal'
+import useOpenExitModal from "../../../../shared/hooks/useOpenExitModal";
 
 function Admin() {
-  const logout = useAdminStore((state) => state.logout)
-  const openExitModal = useOpenExitModal(logout)
+  const isAdmin = useAuthStore((state) => state.isAdmin);
+  //   const logout = useAdminStore((state) => state.logout)
+  //   const openExitModal = useOpenExitModal(logout)
   const { addNewDuties, error } = dutyApiStore();
 
   const addMessage = useMessageStore((state) => state.addMessage);
@@ -21,6 +24,8 @@ function Admin() {
     console.log(res.message);
     addMessage(res.message);
   };
+ 
+  if (!isAdmin) return <ErrorAdmin />;
 
   return (
     <div className="p-6 mt-2 max-w-full sm:max-w-lg mx-auto">
@@ -47,10 +52,10 @@ function Admin() {
           Загрузить
         </Button>
       </form>
-      <div className="mt-8">
+      {/* <div className="mt-8">
         <p className="text-sm text-primary mb-3">Выйти из аккаунта администратора</p>
         <Button onClick={openExitModal}>Выйти</Button>
-      </div>
+      </div> */}
     </div>
   );
 }
