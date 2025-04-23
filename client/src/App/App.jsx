@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import useDutyStore from "../shared/store/dutyStore.js";
 import Loader from "../shared/components/UI/Loader/Loader.jsx";
 import Message from "../shared/components/Message/Message.jsx";
+import Modal from "../shared/components/Modal/Modal.jsx";
 
 function App() {
   const fetchDuties = useDutyStore((state) => state.fetchDuties);
@@ -16,10 +17,11 @@ function App() {
     fetchDuties();
   }, [fetchDuties]);
 
-  // if (isLoading) return <Loader fullPage={true} />;
+  if (isLoading) return <Loader fullPage={true} />;
 
   return (
     <div className={`${classes.App}`}>
+      <Modal />
       <Message />
       <Router />
     </div>
