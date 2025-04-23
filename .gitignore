@@ -15,7 +15,6 @@ client/build/          # Сборка React
 client/dist/           # Если используется dist
 
 # Для server
-server
 server/dist/           # Скомпилированные файлы сервера
 server/logs/           # Папка с логами
 

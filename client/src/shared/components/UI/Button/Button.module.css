@@ -1,0 +1,5 @@
+.btn {
+    background: #0083FF;
+background: linear-gradient(45deg, rgba(0, 131, 255, 1) 0%, rgba(79, 224, 156, 1) 100%);
+    border-radius: 100px;
+}
