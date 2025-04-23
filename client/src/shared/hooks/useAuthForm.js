@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import universalSchema from "../schemas/authSchema";
 
-export default function useAuthForm({ formType, mode = "onBlur" }) {
+export default function useAuthForm({ formType, mode = "onBlur", universalSchema }) {
+  console.log()
   const {
     register,
     handleSubmit,

@@ -4,7 +4,8 @@ import Logo from "../../../../shared/components/UI/Logo/Logo";
 
 import useValidateIsoDate from "../../../../shared/hooks/useValidateISODate";
 
-import upload from "../../../../assets/icons/upload.svg";
+// import upload from "../../../../assets/icons/upload.svg";
+import settings from '../../../../assets/icons/settings.svg'
 import exit from "../../../../assets/icons/exit.svg";
 
 import { useParams, Link, useLocation } from "react-router";
@@ -41,8 +42,8 @@ function Header() {
           />
           <Link to="/admin" className="ml-4 p-1 box-content">
             <img
-              src={upload}
-              alt="uploadIcon"
+              src={settings}
+              alt="settingsIcon"
               className="w-4 cursor-pointer box-content"
             />
           </Link>

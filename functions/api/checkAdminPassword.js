@@ -6,7 +6,7 @@ if (!admin.apps.length) {
   admin.initializeApp();
 }
 
-exports.checkPassword = onCall({ region: "europe-north1" }, async (data, context) => {
+exports.checkAdminPassword = onCall({ region: "europe-north1" }, async (data, context) => {
   logger.info("Received data:", { data });
 
   if (!data || typeof data !== "object") {
@@ -24,13 +24,13 @@ exports.checkPassword = onCall({ region: "europe-north1" }, async (data, context
 
   try {
     logger.info("Checking password...");
-    const passwordDoc = await admin.firestore().collection("appSettings").doc("Ghe394qUWo4WdeEM7dMH").get();
+    const passwordDoc = await admin.firestore().collection("appSettings").doc("ySieajNhy81rVWoyX60j").get();
     if (!passwordDoc.exists) {
       logger.error("Password document not found");
       throw new HttpsError("not-found", "Пароль не настроен");
     }
 
-    const correctPassword = passwordDoc.data().password; 
+    const correctPassword = passwordDoc.data().adminPassword; 
     if (!correctPassword) {
       logger.error("Password value not found in document");
       throw new HttpsError("internal", "Пароль не настроен корректно");

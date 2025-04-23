@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import Button from "../../../../shared/components/UI/Button/Button";
 import PassInput from "../../../../shared/components/UI/PassInput/PassInput";
-import useAuthForm from "../../hooks/useAuthForm";
+import useAuthForm from "../../../../shared/hooks/useAuthForm";
 import useAuthStore from "../../store/authStore";
+
+import universalSchema from "../../schemas/authSchema";
 
 function AuthForm() {
   const { checkPassword, loading, error } = useAuthStore();
@@ -10,6 +12,7 @@ function AuthForm() {
   const { register, handleSubmit, reset, errors } = useAuthForm({
     formType: "login",
     mode: "onBlur",
+    universalSchema: universalSchema,
   });
 
   const [sumbitErrors, setSubmitErrors] = useState(null);
@@ -23,7 +26,7 @@ function AuthForm() {
       setSubmitErrors(e.message);
     }
   };
- 
+
   return (
     <form
       className="px-5 pt-8 pb-20 mt-7 border rounded-3xl border-line w-full max-w-96"
@@ -39,7 +42,7 @@ function AuthForm() {
         Пароль
       </PassInput>
       {/* disabled={loading} */}
-      <Button type="submit" className="w-full py-3 mt-4" >
+      <Button type="submit" className="w-full py-3 mt-4">
         Войти
       </Button>
       <span className="text-sm mt-3 block text-red-600">{sumbitErrors}</span>

@@ -1,9 +1,9 @@
 import {Admin} from '../../modules/Admin/index'
-function Inner() {
+function AdminWrapper() {
   
   return (
    <Admin />
   );
 }
 
-export default Inner;
+export default AdminWrapper;
