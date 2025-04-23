@@ -20,6 +20,7 @@ const useDutyStore = create((set) => ({
 
   getDutiesByOrganization: (organization) => {
     const duties = useDutyStore.getState().duties;
+
     if (!Array.isArray(duties)) return [];
     return organization
       ? useDutyStore
@@ -72,7 +73,7 @@ const useDutyStore = create((set) => ({
       set({ isLoading: false });
       if (result.error) {
         set({ error: result.error });
-        return
+        return;
       }
       return result;
     } catch (error) {

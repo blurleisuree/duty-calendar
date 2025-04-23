@@ -7,14 +7,14 @@ import classes from "./Message.module.css";
 function Message() {
   const { messages, removeMessage } = useMessageStore();
 
-  // useEffect(() => {
-  //   messages.forEach((msg) => {
-  //     const timer = setTimeout(() => {
-  //       removeMessage(msg.id);
-  //     }, 3000);
-  //     return () => clearTimeout(timer);
-  //   });
-  // }, [messages, removeMessage]);
+  useEffect(() => {
+    messages.forEach((msg) => {
+      const timer = setTimeout(() => {
+        removeMessage(msg.id);
+      }, 3000);
+      return () => clearTimeout(timer);
+    });
+  }, [messages, removeMessage]);
 
   if (!messages.length) return null;
 

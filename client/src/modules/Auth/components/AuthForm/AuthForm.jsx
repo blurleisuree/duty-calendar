@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../../../shared/components/UI/Button/Button";
 import PassInput from "../../../../shared/components/UI/PassInput/PassInput";
 import useAuthForm from "../../hooks/useAuthForm";
+import useAuthStore from "../../store/authStore";
 
 function AuthForm() {
+  const { checkPassword, isAuthenticated, loading, error } = useAuthStore();
+
   const { register, handleSubmit, reset, errors } = useAuthForm({
     formType: "login",
     mode: "onBlur",
@@ -13,13 +16,17 @@ function AuthForm() {
   const onSubmit = async (data) => {
     setSubmitErrors(null);
     try {
-      //   await login(data.email, data.password);
+      await checkPassword(data.password);
       reset();
     } catch (e) {
-      console.log(e);
+      console.error("Error in AuthForm:", error);
       setSubmitErrors(e.message);
     }
   };
+
+  // useEffect(() => {
+  //   console.log(loading, error, isAuthenticated);
+  // }, [loading, error, isAuthenticated]);
 
   return (
     <form
