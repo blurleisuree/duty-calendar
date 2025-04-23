@@ -6,34 +6,37 @@ import ErrorAdmin from "../ErrorAdmin/ErrorAdmin";
 
 import dutyApiStore from "../../../../shared/store/dutyStore";
 import useMessageStore from "../../../../shared/store/messageStore";
-// import useAdminStore from "../../store/adminStore";
 import useAuthStore from "../../../Auth/store/authStore";
-
-import useOpenExitModal from "../../../../shared/hooks/useOpenExitModal";
 
 function Admin() {
   const isAdmin = useAuthStore((state) => state.isAdmin);
-  //   const logout = useAdminStore((state) => state.logout)
-  //   const openExitModal = useOpenExitModal(logout)
-  const { addNewDuties, error } = dutyApiStore();
-
+  const { addNewDuties, isLoading, error } = dutyApiStore();
   const addMessage = useMessageStore((state) => state.addMessage);
+
   const onSubmit = async (event) => {
     event.preventDefault();
-    const res = await addNewDuties(event);
-    console.log(res.message);
-    addMessage(res.message);
+    const file = event.target.elements.excelFile.files[0]; // Получаем файл из input
+    if (!file) {
+      addMessage("Пожалуйста, выберите файл");
+      return;
+    }
+
+    try {
+      const res = await addNewDuties(file); // Передаем файл напрямую
+      addMessage(res.message);
+    } catch (err) {
+      addMessage("Ошибка загрузки: " + err.message);
+    }
   };
- 
+
   if (!isAdmin) return <ErrorAdmin />;
 
   return (
     <div className="p-6 mt-2 max-w-full sm:max-w-lg mx-auto">
       <form
         id="uploadForm"
-        encType="multipart/form-data"
         className="w-full"
-        onSubmit={(event) => onSubmit(event)}
+        onSubmit={onSubmit}
       >
         <FileInput
           id="excelFile"
@@ -48,14 +51,10 @@ function Admin() {
           xlsx, xls (макс. 3MB)
         </SubText>
         <Error>{error}</Error>
-        <Button type="submit" className="mt-4">
-          Загрузить
+        <Button type="submit" className="mt-4" disabled={isLoading}>
+          {isLoading ? "Загрузка..." : "Загрузить"}
         </Button>
       </form>
-      {/* <div className="mt-8">
-        <p className="text-sm text-primary mb-3">Выйти из аккаунта администратора</p>
-        <Button onClick={openExitModal}>Выйти</Button>
-      </div> */}
     </div>
   );
 }
