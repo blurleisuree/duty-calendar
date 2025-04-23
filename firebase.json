@@ -44,7 +44,8 @@
       "port": 5001
     },
     "firestore": {
-      "port": 8080
+      "port": 8080,
+      "persistence": true
     },
     "hosting": {
       "port": 5000

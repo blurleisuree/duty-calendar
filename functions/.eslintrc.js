@@ -20,6 +20,8 @@ module.exports = {
 "object-curly-spacing": ["off"],
 "indent": ["off"],
 "no-trailing-spaces": ["off"],
+"max-len": ["off"],
+"no-unused-vars": ["warn"],
   },
   overrides: [
     {
