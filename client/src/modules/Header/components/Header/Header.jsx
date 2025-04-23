@@ -5,19 +5,21 @@ import Logo from "../../../../shared/components/UI/Logo/Logo";
 import useValidateIsoDate from "../../../../shared/hooks/useValidateISODate";
 
 // import upload from "../../../../assets/icons/upload.svg";
-import settings from '../../../../assets/icons/settings.svg'
+import settings from "../../../../assets/icons/settings.svg";
 import exit from "../../../../assets/icons/exit.svg";
 
 import { useParams, Link, useLocation } from "react-router";
 import useOpenExitModal from "../../../../shared/hooks/useOpenExitModal.jsx";
+import useAuthStore from "../../../Auth/store/authStore.js";
 
 function Header() {
+  const logout = useAuthStore((state) => state.logout);
   const { date } = useParams();
   const url = useLocation().pathname;
 
   const isDateValid = useValidateIsoDate(date);
 
-  const openExitModal = useOpenExitModal();
+  const openExitModal = useOpenExitModal(logout);
 
   return (
     <div className="flex flex-col w-screen pt-9 pb-7 px-5 border-b border-b-line">

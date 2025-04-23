@@ -45,7 +45,7 @@ const useAuthStore = create((set) => ({
 
   logout: () => {
     set({ isAuthenticated: false, error: null });
-    localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem("isAuthenticated", "authTimestamp");
   },
 }));
 

@@ -25,7 +25,10 @@ const useAdminStore = create((set) => ({
         throw new Error("Password cannot be empty");
       }
 
-      const checkPasswordFunction = httpsCallable(functions, "checkAdminPassword");
+      const checkPasswordFunction = httpsCallable(
+        functions,
+        "checkAdminPassword"
+      );
       const result = await checkPasswordFunction({ password: passwordStr });
       // 24 часа действительна сессия
       if (result.data.success) {
@@ -45,7 +48,7 @@ const useAdminStore = create((set) => ({
 
   logout: () => {
     set({ AdminIsAuthenticated: false, error: null });
-    localStorage.removeItem("AdminIsAuthenticated");
+    localStorage.removeItem("AdminIsAuthenticated", "AdminAuthTimestamp");
   },
 }));
 

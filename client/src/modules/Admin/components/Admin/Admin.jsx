@@ -5,15 +5,20 @@ import Error from "../../../../shared/components/UI/Error/Error";
 
 import dutyApiStore from "../../../../shared/store/dutyStore";
 import useMessageStore from "../../../../shared/store/messageStore";
+import useAdminStore from "../../store/adminStore";
+
+import useOpenExitModal from '../../../../shared/hooks/useOpenExitModal'
 
 function Admin() {
+  const logout = useAdminStore((state) => state.logout)
+  const openExitModal = useOpenExitModal(logout)
   const { addNewDuties, error } = dutyApiStore();
 
   const addMessage = useMessageStore((state) => state.addMessage);
   const onSubmit = async (event) => {
     event.preventDefault();
     const res = await addNewDuties(event);
-    console.log(res.message)
+    console.log(res.message);
     addMessage(res.message);
   };
 
@@ -42,6 +47,10 @@ function Admin() {
           Загрузить
         </Button>
       </form>
+      <div className="mt-8">
+        <p className="text-sm text-primary mb-3">Выйти из аккаунта администратора</p>
+        <Button onClick={openExitModal}>Выйти</Button>
+      </div>
     </div>
   );
 }

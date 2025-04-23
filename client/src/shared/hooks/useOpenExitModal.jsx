@@ -1,11 +1,11 @@
 import useModalStore from "../store/modalStore";
-import { useAuthStore } from "../../modules/Auth/index";
+// import { useAuthStore } from "../../modules/Auth/index";
 
 import Button from "../components/UI/Button/Button";
 
-function useOpenExitModal() {
+function useOpenExitModal(logout) {
   const { openModal, closeModal } = useModalStore();
-  const logout = useAuthStore((state) => state.logout);
+  // const logout = useAuthStore((state) => state.logout);
 
   function exit() {
     closeModal();
