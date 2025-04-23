@@ -16,7 +16,7 @@ function App() {
     fetchDuties();
   }, [fetchDuties]);
 
-  if (isLoading) return <Loader fullPage={true} />;
+  // if (isLoading) return <Loader fullPage={true} />;
 
   return (
     <div className={`${classes.App}`}>
