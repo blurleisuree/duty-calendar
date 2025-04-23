@@ -1,7 +1,7 @@
-import { AdminAuth } from "../../modules/Admin/index";
+// import { AdminAuth } from "../../modules/Admin/index";
 
-function AdminAuthWrapper() {
-  return <AdminAuth />;
-}
+// function AdminAuthWrapper() {
+//   return <AdminAuth />;
+// }
 
-export default AdminAuthWrapper;
+// export default AdminAuthWrapper;

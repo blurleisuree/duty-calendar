@@ -1,84 +1,118 @@
 import { create } from "zustand";
+import { collection, getDocs, deleteDoc, addDoc } from "firebase/firestore";
+import  {db}  from "../../../firebase"; // Убедитесь, что путь правильный
+import * as XLSX from "xlsx";
 
 const useDutyStore = create((set, get) => ({
   duties: [],
   isLoading: false,
   error: null,
 
+  convertToISODate: (dateValue) => {
+    if (typeof dateValue === "number") {
+      const excelEpoch = new Date(1899, 11, 30);
+      const date = new Date(excelEpoch.getTime() + dateValue * 24 * 60 * 60 * 1000);
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, "0");
+      const day = date.getDate().toString().padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
+    return null;
+  },
+
   fetchDuties: async () => {
     set({ isLoading: true, error: null });
     try {
-      const responce = await fetch(
-        "http://127.0.0.1:5001/dutydays-8be4d/europe-north1/getDuties"
-      );
-      const data = await responce.json();
-      set({ duties: data.data, isLoading: false });
+      if (!db) {
+        throw new Error("Firestore db is not initialized");
+      }
+      const dutiesCollection = collection(db, "duties");
+      const snapshot = await getDocs(dutiesCollection);
+      const dutiesData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      set({ duties: dutiesData, isLoading: false });
     } catch (error) {
       set({ error: error.message, isLoading: false });
+      throw error;
     }
   },
 
   getDutiesByOrganization: (organization) => {
-    const duties = useDutyStore.getState().duties;
-
+    const duties = get().duties;
     if (!Array.isArray(duties)) return [];
     return organization
-      ? useDutyStore
-          .getState()
-          .duties.filter((duty) => duty.organization === organization)
-      : null;
+      ? duties.filter((duty) => duty.organization === organization)
+      : [];
   },
 
   getDutiesByDate: (date) => {
-    const duties = useDutyStore.getState().duties;
+    const duties = get().duties;
     if (!Array.isArray(duties)) return [];
-    return date
-      ? useDutyStore.getState().duties.filter((duty) => duty.date === date)
-      : null;
+    return date ? duties.filter((duty) => duty.date === date) : [];
   },
 
   getDuties: (organization, date) => {
-    const duties = useDutyStore.getState().duties;
-    if (!Array.isArray(duties)) return [];
-
-    let filteredDuties = duties;
-
+    let filteredDuties = get().duties;
+    if (!Array.isArray(filteredDuties)) return [];
     if (organization) {
       filteredDuties = filteredDuties.filter(
         (duty) => duty.organization === organization
       );
     }
-
     if (date) {
       filteredDuties = filteredDuties.filter((duty) => duty.date === date);
     }
-
     return filteredDuties;
   },
 
-  addNewDuties: async (event) => {
+  addNewDuties: async (file) => {
     set({ isLoading: true, error: null });
-    const formData = new FormData(event.currentTarget);
-
     try {
-      const response = await fetch(
-        "http://127.0.0.1:5001/dutydays-8be4d/europe-north1/addNewDuty",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-      const result = await response.json();
-
-      set({ isLoading: false });
-      if (result.error) {
-        set({ error: result.error });
-        return;
+      // Проверка формата файла
+      if (!file.name.endsWith(".xlsx")) {
+        throw new Error("File must be an Excel (.xlsx)");
       }
+
+      // Чтение файла
+      const arrayBuffer = await file.arrayBuffer();
+      const workbook = XLSX.read(arrayBuffer, { type: "array" });
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+      const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+      // Обработка данных
+      const duties = data.slice(1).map((row) => ({
+        organization: row[0] ?? null,
+        date: row[1] ? get().convertToISODate(row[1]) : null,
+        timeStart: row[2] ?? null,
+        timeEnd: row[3] ?? null,
+        fullName: row[4] ?? null,
+        position: row[5] ?? null,
+        phone: row[6] ?? null,
+      }));
+
+      // Работа с Firestore
+      if (!db) {
+        throw new Error("Firestore db is not initialized");
+      }
+      const dutiesCollection = collection(db, "duties");
+
+      // Удаление существующих данных
+      const snapshot = await getDocs(dutiesCollection);
+      const deletePromises = snapshot.docs.map((doc) => deleteDoc(doc.ref));
+      await Promise.all(deletePromises);
+
+      // Добавление новых данных
+      const addPromises = duties.map((duty) => addDoc(dutiesCollection, duty));
+      await Promise.all(addPromises);
+
+      // Обновление состояния
+      set({ isLoading: false });
       get().fetchDuties();
-      return result;
+      return { success: true, message: "Данные успешно обновлены" };
     } catch (error) {
+      console.error("Error in addNewDuties:", error);
       set({ error: error.message, isLoading: false });
+      throw error;
     }
   },
 }));

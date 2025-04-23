@@ -9,6 +9,8 @@ import Loader from "../shared/components/UI/Loader/Loader.jsx";
 import Message from "../shared/components/Message/Message.jsx";
 import Modal from "../shared/components/Modal/Modal.jsx";
 
+import { useAuthStore } from "../modules/Auth/index.js";
+
 function App() {
   const fetchDuties = useDutyStore((state) => state.fetchDuties);
   const isLoading = useDutyStore((state) => state.isLoading);
