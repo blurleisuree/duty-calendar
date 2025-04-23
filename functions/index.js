@@ -1,9 +1,14 @@
 const admin = require("firebase-admin");
 
+// Инициализация admin должна быть первой
 admin.initializeApp();
 
-const addNewDuty = require("./api/addNewDuty");
-const getDuties = require("./api/getDuties");
+// Импортируем функции
+const { getDuties } = require("./api/getDuties");
+const { addNewDuty } = require("./api/addNewDuty");
+const { checkPassword } = require("./api/checkPassword");
 
-exports.addNewDuty = addNewDuty;
+// Экспортируем функции
 exports.getDuties = getDuties;
+exports.addNewDuty = addNewDuty;
+exports.checkPassword = checkPassword;
