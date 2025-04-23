@@ -15,17 +15,11 @@ function App() {
   const fetchDuties = useDutyStore((state) => state.fetchDuties);
   const isLoading = useDutyStore((state) => state.isLoading);
 
-  // useEffect(() => {
-  //   fetchDuties();
-  // }, [fetchDuties]);
+  useEffect(() => {
+    fetchDuties();
+  }, [fetchDuties]);
 
-  // if (isLoading) return <Loader fullPage={true} />;
-
-  // const {isAdmin, isAuthenticated} = useAuthStore()
-
-  //   useEffect(() => {
-  //     console.log(isAdmin);
-  //   }, [isAdmin]);
+  if (isLoading) return <Loader fullPage={true} />;
 
   return (
     <div className={`${classes.App}`}>
