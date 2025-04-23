@@ -18,6 +18,7 @@ client/dist/           # Если используется dist
 server/dist/           # Скомпилированные файлы сервера
 server/logs/           # Папка с логами
 /server/serviceAccountKey.json
+server
 
 # Временные файлы
 *.swp                  # Временные файлы Vim
