@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-const useDutyStore = create((set) => ({
+const useDutyStore = create((set, get) => ({
   duties: [],
   isLoading: false,
   error: null,
@@ -75,6 +75,7 @@ const useDutyStore = create((set) => ({
         set({ error: result.error });
         return;
       }
+      get().fetchDuties();
       return result;
     } catch (error) {
       set({ error: error.message, isLoading: false });
