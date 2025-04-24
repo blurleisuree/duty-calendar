@@ -64,9 +64,38 @@ export default defineConfig({
               cacheName: "assets-cache",
             },
           },
+          // Кэширование запросов к Firestore
+          {
+            urlPattern: /^https:\/\/firestore\.googleapis\.com\/.*/,
+            handler: "NetworkFirst",
+            options: {
+              cacheName: "firestore-data-cache",
+              expiration: {
+                maxEntries: 50, // Максимум 50 записей в кэше
+                maxAgeSeconds: 30 * 24 * 60 * 60, // Хранить 30 дней
+              },
+              cacheableResponse: {
+                statuses: [0, 200], // Кэшировать успешные ответы
+              },
+            },
+          },
+          // Кэширование запросов к Identity Toolkit (Auth)
+          {
+            urlPattern: /^https:\/\/identitytoolkit\.googleapis\.com\/.*/,
+            handler: "NetworkFirst",
+            options: {
+              cacheName: "auth-data-cache",
+              expiration: {
+                maxEntries: 20, // Максимум 20 записей в кэше
+                maxAgeSeconds: 7 * 24 * 60 * 60, // Хранить 7 дней
+              },
+              cacheableResponse: {
+                statuses: [0, 200], // Кэшировать успешные ответы
+              },
+            },
+          },
         ],
       },
     }),
   ],
 });
-

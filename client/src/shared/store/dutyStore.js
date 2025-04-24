@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { collection, getDocs, deleteDoc, addDoc } from "firebase/firestore";
-import  {db}  from "../../../firebase"; // Убедитесь, что путь правильный
+import { db } from "../../../firebase"; // Убедитесь, что путь правильный
 import * as XLSX from "xlsx";
 
 const useDutyStore = create((set, get) => ({
@@ -22,17 +22,55 @@ const useDutyStore = create((set, get) => ({
 
   fetchDuties: async () => {
     set({ isLoading: true, error: null });
+
+    let dutiesData = [];
+    let collectionExists = false;
+
     try {
       if (!db) {
         throw new Error("Firestore db is not initialized");
       }
       const dutiesCollection = collection(db, "duties");
       const snapshot = await getDocs(dutiesCollection);
-      const dutiesData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+
+      if (snapshot.empty) {
+        dutiesData = [];
+        collectionExists = true;
+      } else {
+        dutiesData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        collectionExists = true;
+      }
+
+      const cache = {
+        data: dutiesData,
+        timestamp: Date.now(),
+      };
+      localStorage.setItem("dutiesData", JSON.stringify(cache));
+
       set({ duties: dutiesData, isLoading: false });
     } catch (error) {
-      set({ error: error.message, isLoading: false });
-      throw error;
+      console.error("Error fetching duties from Firestore:", error);
+
+      const cached = localStorage.getItem("dutiesData");
+      if (cached) {
+        const { data, timestamp } = JSON.parse(cached);
+        const ageInSeconds = (Date.now() - timestamp) / 1000;
+
+        if (ageInSeconds > 7 * 24 * 60 * 60) {
+          console.warn("Cached duties data is older than 7 days");
+        }
+
+        console.log("Using cached duties data from localStorage");
+        set({ duties: data, isLoading: false });
+        return;
+      }
+
+      set({
+        error: collectionExists
+          ? error.message
+          : "Коллекция duties отсутствует в Firestore",
+        isLoading: false,
+      });
     }
   },
 
@@ -96,10 +134,15 @@ const useDutyStore = create((set, get) => ({
       }
       const dutiesCollection = collection(db, "duties");
 
-      // Удаление существующих данных
-      const snapshot = await getDocs(dutiesCollection);
-      const deletePromises = snapshot.docs.map((doc) => deleteDoc(doc.ref));
-      await Promise.all(deletePromises);
+      // Проверяем существование коллекции и удаляем существующие данные
+      try {
+        const snapshot = await getDocs(dutiesCollection);
+        const deletePromises = snapshot.docs.map((doc) => deleteDoc(doc.ref));
+        await Promise.all(deletePromises);
+      } catch (error) {
+        console.warn("Could not fetch existing duties, assuming collection does not exist:", error);
+        // Если коллекция не существует или доступ запрещен, продолжаем добавление новых данных
+      }
 
       // Добавление новых данных
       const addPromises = duties.map((duty) => addDoc(dutiesCollection, duty));

@@ -67,7 +67,7 @@ if (!self.define) {
     });
   };
 }
-define(['./workbox-492c5132'], (function (workbox) { 'use strict';
+define(['./workbox-d9cccedc'], (function (workbox) { 'use strict';
 
   self.skipWaiting();
   workbox.clientsClaim();
@@ -82,7 +82,7 @@ define(['./workbox-492c5132'], (function (workbox) { 'use strict';
     "revision": "3ca0b8505b4bec776b69afdba2768812"
   }, {
     "url": "index.html",
-    "revision": "0.s8ibbvhk5ug"
+    "revision": "0.cih6cmf82r"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html"), {
@@ -99,6 +99,24 @@ define(['./workbox-492c5132'], (function (workbox) { 'use strict';
   }) => ["style", "script", "worker"].includes(request.destination), new workbox.StaleWhileRevalidate({
     "cacheName": "assets-cache",
     plugins: []
+  }), 'GET');
+  workbox.registerRoute(/^https:\/\/firestore\.googleapis\.com\/.*/, new workbox.NetworkFirst({
+    "cacheName": "firestore-data-cache",
+    plugins: [new workbox.ExpirationPlugin({
+      maxEntries: 50,
+      maxAgeSeconds: 2592000
+    }), new workbox.CacheableResponsePlugin({
+      statuses: [0, 200]
+    })]
+  }), 'GET');
+  workbox.registerRoute(/^https:\/\/identitytoolkit\.googleapis\.com\/.*/, new workbox.NetworkFirst({
+    "cacheName": "auth-data-cache",
+    plugins: [new workbox.ExpirationPlugin({
+      maxEntries: 20,
+      maxAgeSeconds: 604800
+    }), new workbox.CacheableResponsePlugin({
+      statuses: [0, 200]
+    })]
   }), 'GET');
 
 }));
