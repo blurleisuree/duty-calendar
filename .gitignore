@@ -13,12 +13,14 @@ npm-debug.log
 # Для client (React)
 client/build/          # Сборка React
 client/dist/           # Если используется dist
+client/public/*.log
+.vite/
 
 # Для server
 server/dist/           # Скомпилированные файлы сервера
 server/logs/           # Папка с логами
-server/serviceAccountKey.json
-
+server/node_modules/
+server/.env
 
 # Временные файлы
 *.swp                  # Временные файлы Vim
@@ -27,3 +29,13 @@ server/serviceAccountKey.json
 
 # Системные файлы
 Thumbs.db              # Windows
+
+
+# Firebase
+.firebaserc
+firestore.indexes.json
+firestore.rules
+emulator-data/
+firebase-debug.log
+firebase-debug.*.log
+.firebase/

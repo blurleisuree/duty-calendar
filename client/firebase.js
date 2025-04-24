@@ -16,13 +16,13 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-// if (import.meta.env.VITE_FIREBASE_EMULATOR === "true") {
-//   console.log("Connecting to Firestore emulator at 127.0.0.1:8080");
-//   connectFirestoreEmulator(db, "127.0.0.1", 8080);
-//   console.log("Connecting to Auth emulator at 127.0.0.1:9099");
-//   connectAuthEmulator(auth, "http://127.0.0.1:9099", { disableWarnings: true });
-// } else {
-//   console.log("Using production Firestore and Auth");
-// }
+if (import.meta.env.VITE_FIREBASE_EMULATOR === "true") {
+  console.log("Connecting to Firestore emulator at 127.0.0.1:8080");
+  connectFirestoreEmulator(db, "127.0.0.1", 8080);
+  console.log("Connecting to Auth emulator at 127.0.0.1:9099");
+  connectAuthEmulator(auth, "http://127.0.0.1:9099", { disableWarnings: true });
+} else {
+  console.log("Using production Firestore and Auth");
+}
 
 export { db, auth };
