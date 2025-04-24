@@ -11,7 +11,9 @@ const useDutyStore = create((set, get) => ({
   convertToISODate: (dateValue) => {
     if (typeof dateValue === "number") {
       const excelEpoch = new Date(1899, 11, 30);
-      const date = new Date(excelEpoch.getTime() + dateValue * 24 * 60 * 60 * 1000);
+      const date = new Date(
+        excelEpoch.getTime() + dateValue * 24 * 60 * 60 * 1000
+      );
       const year = date.getFullYear();
       const month = (date.getMonth() + 1).toString().padStart(2, "0");
       const day = date.getDate().toString().padStart(2, "0");
@@ -22,53 +24,62 @@ const useDutyStore = create((set, get) => ({
 
   fetchDuties: async () => {
     set({ isLoading: true, error: null });
-
-    let dutiesData = [];
-    let collectionExists = false;
-
+  
     try {
+      // Проверяем наличие интернета
+      if (!navigator.onLine) {
+        throw new Error("No internet connection, falling back to cache");
+      }
+  
       if (!db) {
         throw new Error("Firestore db is not initialized");
       }
+  
       const dutiesCollection = collection(db, "duties");
       const snapshot = await getDocs(dutiesCollection);
-
-      if (snapshot.empty) {
-        dutiesData = [];
-        collectionExists = true;
+      let dutiesData = [];
+  
+      if (!snapshot.empty) {
+        dutiesData = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
       } else {
-        dutiesData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-        collectionExists = true;
+        console.log("Firestore collection is empty");
       }
-
-      const cache = {
-        data: dutiesData,
-        timestamp: Date.now(),
-      };
-      localStorage.setItem("dutiesData", JSON.stringify(cache));
-
+  
+      // Сохраняем в localStorage только если получили данные
+      if (dutiesData.length > 0) {
+        const cache = {
+          data: dutiesData,
+          timestamp: Date.now(),
+        };
+        localStorage.setItem("dutiesData", JSON.stringify(cache));
+        console.log("Data fetched from Firestore and cached:", dutiesData);
+      }
+  
       set({ duties: dutiesData, isLoading: false });
     } catch (error) {
       console.error("Error fetching duties from Firestore:", error);
-
+  
+      // Используем кэш из localStorage
       const cached = localStorage.getItem("dutiesData");
       if (cached) {
         const { data, timestamp } = JSON.parse(cached);
         const ageInSeconds = (Date.now() - timestamp) / 1000;
-
+  
         if (ageInSeconds > 7 * 24 * 60 * 60) {
           console.warn("Cached duties data is older than 7 days");
         }
-
-        console.log("Using cached duties data from localStorage");
+  
+        console.log("Using cached duties data from localStorage:", data);
         set({ duties: data, isLoading: false });
         return;
       }
-
+  
+      // Если кэша нет, устанавливаем ошибку
       set({
-        error: collectionExists
-          ? error.message
-          : "Коллекция duties отсутствует в Firestore",
+        error: error.message || "Не удалось загрузить данные из Firestore или кэша",
         isLoading: false,
       });
     }
@@ -140,7 +151,10 @@ const useDutyStore = create((set, get) => ({
         const deletePromises = snapshot.docs.map((doc) => deleteDoc(doc.ref));
         await Promise.all(deletePromises);
       } catch (error) {
-        console.warn("Could not fetch existing duties, assuming collection does not exist:", error);
+        console.warn(
+          "Could not fetch existing duties, assuming collection does not exist:",
+          error
+        );
         // Если коллекция не существует или доступ запрещен, продолжаем добавление новых данных
       }
 
