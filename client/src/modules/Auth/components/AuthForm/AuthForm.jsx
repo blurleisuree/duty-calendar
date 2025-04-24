@@ -27,7 +27,7 @@ function AuthForm() {
       reset();
     } catch (e) {
       console.error("Error in AuthForm:", error);
-      setSubmitErrors(e.message);
+      setSubmitErrors(e);
     }
   };
 
@@ -54,7 +54,7 @@ function AuthForm() {
       <Button type="submit" className="w-full py-3 mt-4">
         Войти
       </Button>
-      <span className="text-sm mt-3 block text-red-600">{sumbitErrors}</span>
+      <span className="text-sm mt-3 block text-red-600">{error}</span>
       <p
         className="mt-5 text-center text-active underline-1 underline"
         onClick={toggleIsAdmin}
