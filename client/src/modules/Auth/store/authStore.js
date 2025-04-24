@@ -37,6 +37,7 @@ const useAuthStore = create((set) => ({
       return { success: true };
     } catch (error) {
       console.error("Error in login:", error);
+      
       const errorMessage =
         error.code === "auth/wrong-password"
           ? "Неверный пароль"

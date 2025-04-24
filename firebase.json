@@ -17,35 +17,44 @@
     }
   ],
   "hosting": {
-  "public": "client/dist",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "public": "client/dist",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
         "source": "**",
         "destination": "/index.html"
       }
     ],
-    "predeploy": [
-    "cd client && npm ci && npm run build"
+    "predeploy": ["cd client && npm ci && npm run build"],
+    "headers": [
+      {
+        "source": "/manifest.webmanifest",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/manifest+json"
+          }
+        ]
+      },
+      {
+        "source": "/manifest.json",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/manifest+json"
+          }
+        ]
+      }
     ]
   },
   "emulators": {
     "auth": {
-      "port": 9099
-    },
-    "functions": {
-      "port": 5001
+      "port": 9099,
+      "persistence": true
     },
     "firestore": {
       "port": 8080,
       "persistence": true
-    },
-    "hosting": {
-      "port": 5000
     },
     "ui": {
       "enabled": true

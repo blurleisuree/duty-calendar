@@ -24,7 +24,7 @@ function PassInput({
   }, [setIsShowPass]);
 
   return (
-    <div className={className + " " + classes.input} htmlFor={name}>
+    <div className={className} htmlFor={name}>
       <div className="flex items-center justify-between">
         <label
           htmlFor={id}
