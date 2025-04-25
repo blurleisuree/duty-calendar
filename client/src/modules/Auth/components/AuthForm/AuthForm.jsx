@@ -1,10 +1,14 @@
 import { useState } from "react";
-import Button from "../../../../shared/components/UI/Button/Button";
-import PassInput from "../../../../shared/components/UI/PassInput/PassInput";
-import useAuthForm from "../../../../shared/hooks/useAuthForm";
 import useAuthStore from "../../store/authStore";
+import useUserStore from "../../store/userStore";
+
+import useAuthForm from "../../../../shared/hooks/useAuthForm";
 
 import universalSchema from "../../schemas/authSchema";
+
+import Button from "../../../../shared/components/UI/Button/Button";
+import PassInput from "../../../../shared/components/UI/PassInput/PassInput";
+import ToggleUser from "../ToggleUser/ToggleUser";
 
 function AuthForm() {
   const { login, loading, error } = useAuthStore();
@@ -15,13 +19,14 @@ function AuthForm() {
     universalSchema: universalSchema,
   });
 
+  const userIsAdmin = useUserStore((state) => state.userIsAdmin);
   const [sumbitErrors, setSubmitErrors] = useState(null);
   const onSubmit = async (data) => {
     setSubmitErrors(null);
     try {
-      if (isAdmin) {
-        await login(data.password, 'admin');
-        return
+      if (userIsAdmin) {
+        await login(data.password, "admin");
+        return;
       }
       await login(data.password);
       reset();
@@ -29,11 +34,6 @@ function AuthForm() {
       console.error("Error in AuthForm:", error);
       setSubmitErrors(e);
     }
-  };
-
-  const [isAdmin, setIsAdmin] = useState(false);
-  const toggleIsAdmin = () => {
-    setIsAdmin(!isAdmin);
   };
 
   return (
@@ -55,14 +55,7 @@ function AuthForm() {
         Войти
       </Button>
       <span className="text-sm mt-3 block text-red-600">{error}</span>
-      <p
-        className="mt-5 text-center text-active underline-1 underline"
-        onClick={toggleIsAdmin}
-      >
-        {isAdmin
-          ? "Войти как обычный пользователь"
-          : " Войти как администратор"}
-      </p>
+      <ToggleUser />
     </form>
   );
 }

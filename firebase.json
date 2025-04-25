@@ -44,7 +44,6 @@
       "persistence": true
     },
     "exportOnExit": true,
-    "import": "./emulator-data",
     "singleProjectMode": true
   }
 }
