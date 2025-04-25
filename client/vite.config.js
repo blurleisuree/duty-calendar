@@ -17,6 +17,7 @@ export default defineConfig({
         "favicons/apple-touch-icon.png",
         "favicons/pwa-192x192.png",
         "favicons/pwa-512x512.png",
+        "assets/fonts/**/*.{woff,woff2,ttf,otf}",
       ],
       manifest: {
         name: "DutyDays",
@@ -47,7 +48,7 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,woff,woff2,ttf,otf}"],
         runtimeCaching: [
           {
             urlPattern: ({ request }) => request.destination === "document",
@@ -88,6 +89,20 @@ export default defineConfig({
               expiration: {
                 maxEntries: 20, // Максимум 20 записей в кэше
                 maxAgeSeconds: 7 * 24 * 60 * 60, // Хранить 7 дней
+              },
+              cacheableResponse: {
+                statuses: [0, 200], // Кэшировать успешные ответы
+              },
+            },
+          },
+          {
+            urlPattern: ({ request }) => request.destination === "font",
+            handler: "CacheFirst",
+            options: {
+              cacheName: "font-cache",
+              expiration: {
+                maxEntries: 10, // Максимум 10 шрифтов
+                maxAgeSeconds: 365 * 24 * 60 * 60, // Хранить 1 год
               },
               cacheableResponse: {
                 statuses: [0, 200], // Кэшировать успешные ответы
