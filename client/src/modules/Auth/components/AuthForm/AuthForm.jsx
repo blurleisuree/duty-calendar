@@ -50,8 +50,7 @@ function AuthForm() {
       >
         Пароль
       </PassInput>
-      {/* disabled={loading} */}
-      <Button type="submit" className="w-full py-3 mt-4">
+      <Button type="submit" className="w-full py-3 mt-4 " disabled={loading}>
         Войти
       </Button>
       <span className="text-sm mt-3 block text-red-600">{error}</span>
