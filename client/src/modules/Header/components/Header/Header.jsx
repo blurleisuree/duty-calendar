@@ -33,20 +33,20 @@ function Header() {
           {url === "/admin" && <ReturnElem path="-1"></ReturnElem>}
         </div>
         <Link to="/calendar" className="flex-0">
-          <Logo type="mini" className="cursor-pointer" />
+          <Logo type="mini" className="cursor-pointer active:opacity-40 transition" />
         </Link>
         <div className="flex items-center flex-1  justify-end">
           <img
             src={exit}
             alt="exit"
             onClick={openExitModal}
-            className="cursor-pointer p-1 box-content"
+            className="cursor-pointer p-1 box-content active:opacity-40 transition"
           />
           <Link to="/admin" className="ml-4 p-1 box-content">
             <img
               src={settings}
               alt="settingsIcon"
-              className="w-4 cursor-pointer box-content"
+              className="w-4 cursor-pointer box-content active:opacity-40 transition"
             />
           </Link>
         </div>
