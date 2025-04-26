@@ -2,6 +2,7 @@ import { format } from "date-fns";
 import { ru } from "date-fns/locale";
 
 import arrow from "@assets/icons/itemArrow.svg";
+import useViewTransition from "@shared/hooks/useViewTransition";
 import useChangeDay from "../../hooks/useChangeDay";
 
 function DateTitle({ date }) {
@@ -13,17 +14,14 @@ function DateTitle({ date }) {
     year: "numeric",
   });
 
+  const withTransition = useViewTransition();
   const changeDay = useChangeDay();
   const handleClick = (direction) => {
-    return () => {
-      changeDay(direction, date);
-    };
+    return withTransition(() => changeDay(direction, date));
   };
 
   return (
-    <h3
-      className="text-primary text-lg text-center mt-4 border-b-line border-b pb-4 capitalize flex items-center justify-between px-5 "
-    >
+    <h3 className="text-primary text-lg text-center mt-4 border-b-line border-b pb-4 capitalize flex items-center justify-between px-5 ">
       <img
         src={arrow}
         alt="arrow"

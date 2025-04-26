@@ -11,6 +11,7 @@ import EmptyData from "../EmptyData/EmptyData";
 import ErrorPath from "../ErrorPath/ErrorPath";
 
 import useChangeDay from "../../hooks/useChangeDay";
+import useViewTransition from "@shared/hooks/useViewTransition";
 import { useSwipeable } from "react-swipeable";
 
 function Item() {
@@ -31,9 +32,10 @@ function Item() {
   }, [activeOrg, date, getDuties, isDateValid]);
 
   const changeDay = useChangeDay();
+  const withTransition = useViewTransition();
   const handlers = useSwipeable({
-    onSwipedLeft: () => changeDay("next", date),
-    onSwipedRight: () => changeDay("prev", date),
+    onSwipedLeft: withTransition(() => changeDay("prev", date)),
+    onSwipedRight: withTransition(() => changeDay("next", date)),
     swipeDuration: 500,
     preventScrollOnSwipe: true,
   });

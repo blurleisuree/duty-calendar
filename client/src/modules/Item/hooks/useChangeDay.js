@@ -10,10 +10,7 @@ const useChangeDay = () => {
         ? format(addDays(date, 1), "yyyy-MM-dd")
         : format(addDays(date, -1), "yyyy-MM-dd");
 
-    if (!document.startViewTransition) {
-      return navigate(`/calendar/${newDate}`);
-    }
-    document.startViewTransition(() => navigate(`/calendar/${newDate}`));
+    navigate(`/calendar/${newDate}`);
   };
 
   return changeDay;
