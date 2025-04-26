@@ -59,6 +59,7 @@ const useDutyStore = create((set, get) => ({
       }
 
       set({ duties: dutiesData, isLoading: false });
+      return get().duties
     } catch (error) {
       console.error("Error fetching duties from Firestore:", error);
 

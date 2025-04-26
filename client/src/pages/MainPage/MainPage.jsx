@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 import { useEffect, useState } from "react";
 
+import useMessageStore from "../../shared/store/messageStore.js";
 import useDutyStore from "../../shared/store/dutyStore.js";
 import { useAuthStore } from "../../modules/Auth/index.js";
 
@@ -14,10 +15,13 @@ function MainPage() {
   const error = useDutyStore((state) => state.error);
   const [offlineMessage, setOfflineMessage] = useState(null);
 
+  const addMessage = useMessageStore((state) => state.addMessage)
   useEffect(() => {
     const loadDuties = async () => {
       try {
-        await fetchDuties();
+        const duties = await fetchDuties();
+        if (duties.length < 1) addMessage('Данные дежурст не найдены')
+
         if (!navigator.onLine) {
           setOfflineMessage("Вы оффлайн. Используются сохраненные данные.");
         }
@@ -27,8 +31,7 @@ function MainPage() {
         }
       }
     };
-
-    loadDuties();
+    loadDuties()
   }, [fetchDuties]);
 
   if (isLoading) return <Loader fullPage={true} />;
