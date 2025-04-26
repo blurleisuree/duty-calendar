@@ -32,8 +32,8 @@ function Item() {
 
   const changeDay = useChangeDay();
   const handlers = useSwipeable({
-    onSwipedLeft: () => changeDay("next", date)(),
-    onSwipedRight: () => changeDay("prev", date)(),
+    onSwipedLeft: () => changeDay("next", date),
+    onSwipedRight: () => changeDay("prev", date),
     swipeDuration: 500,
     preventScrollOnSwipe: true,
   });

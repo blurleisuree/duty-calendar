@@ -1,5 +1,5 @@
 import { startOfMonth, endOfMonth, eachDayOfInterval, getDay } from "date-fns";
-import { ru } from "date-fns/locale";
+import { useSwipeable } from "react-swipeable";
 
 import useCalendarStore from "../../store/CalendarStore";
 
@@ -7,7 +7,7 @@ import CalendarNavigation from "../CalendarNavigation/CalendarNavigation";
 import Day from "../Day/Day";
 
 function Calendar() {
-  const { currentDate } = useCalendarStore();
+  const { currentDate, shiftMonth } = useCalendarStore();
 
   const firstDayOfMonth = startOfMonth(currentDate);
   const lastDayOfMonth = endOfMonth(currentDate);
@@ -27,10 +27,17 @@ function Calendar() {
     calendarDays.push(...Array(remainingSlots).fill(null));
   }
 
+  const handlers = useSwipeable({
+    onSwipedLeft: () => shiftMonth("prev"),
+    onSwipedRight: () => shiftMonth("next"),
+    swipeDuration: 500,
+    preventScrollOnSwipe: true,
+  });
+
   const daysArr = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
   return (
-    <div className="p-6 mt-2 max-w-full sm:max-w-lg mx-auto">
+    <div className="p-6 mt-2 max-w-full sm:max-w-lg mx-auto min-h-screen" {...handlers}>
       <CalendarNavigation />
       <div>
         <div className="grid grid-cols-7 text-center">
