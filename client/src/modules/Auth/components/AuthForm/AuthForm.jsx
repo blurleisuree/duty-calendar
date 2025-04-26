@@ -1,6 +1,6 @@
 import { useState } from "react";
 import useAuthStore from "../../store/authStore";
-import useUserStore from "../../store/userStore";
+import useAuthWayStore from "../../store/authWayStore";
 
 import useAuthForm from "../../../../shared/hooks/useAuthForm";
 
@@ -19,12 +19,12 @@ function AuthForm() {
     universalSchema: universalSchema,
   });
 
-  const userIsAdmin = useUserStore((state) => state.userIsAdmin);
+  const authWayIsAdmin = useAuthWayStore((state) => state.authWayIsAdmin);
   const [sumbitErrors, setSubmitErrors] = useState(null);
   const onSubmit = async (data) => {
     setSubmitErrors(null);
     try {
-      if (userIsAdmin) {
+      if (authWayIsAdmin) {
         await login(data.password, "admin");
         return;
       }

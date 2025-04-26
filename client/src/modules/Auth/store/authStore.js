@@ -53,6 +53,8 @@ const useAuthStore = create((set) => ({
     set({ isAuthenticated: false, isAdmin: false, error: null });
     localStorage.removeItem("isAuthenticated");
     localStorage.removeItem("authTimestamp");
+    localStorage.removeItem("authWayIsAdmin"); 
+    localStorage.removeItem("dutiesData"); 
     localStorage.removeItem("isAdmin"); 
     getAuth().signOut();
   },

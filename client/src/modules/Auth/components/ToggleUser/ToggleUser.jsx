@@ -1,17 +1,19 @@
 import { useEffect } from "react";
-import useUserStore from "../../store/userStore";
+import useAuthWayStore from "../../store/authWayStore";
 
 function ToggleUser() {
-const {toggleUserIsAdmin, userIsAdmin} = useUserStore();
-useEffect(() => {
-console.log(userIsAdmin);
-}, [userIsAdmin])
+  const { toggleAuthWay, authWayIsAdmin } = useAuthWayStore();
+  useEffect(() => {
+    console.log(authWayIsAdmin);
+  }, [authWayIsAdmin]);
   return (
     <p
       className="mt-5 text-center text-active underline-1 underline cursor-pointer"
-      onClick={toggleUserIsAdmin}
+      onClick={toggleAuthWay}
     >
-      {userIsAdmin ? "Войти как обычный пользователь" : " Войти как администратор"}
+      {authWayIsAdmin
+        ? "Войти как обычный пользователь"
+        : " Войти как администратор"}
     </p>
   );
 }

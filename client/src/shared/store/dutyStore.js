@@ -55,7 +55,7 @@ const useDutyStore = create((set, get) => ({
           timestamp: Date.now(),
         };
         localStorage.setItem("dutiesData", JSON.stringify(cache));
-        console.log("Data fetched from Firestore and cached:", dutiesData);
+        console.log("Data fetched from Firestore and cached");
       }
   
       set({ duties: dutiesData, isLoading: false });
