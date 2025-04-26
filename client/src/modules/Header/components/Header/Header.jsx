@@ -18,7 +18,7 @@ function Header() {
 
   const isDateValid = useValidateIsoDate(date);
 
-  const openExitModal = useOpenExitModal(logout);
+  const openExitModal = useOpenExitModal(logout)
 
   return (
     <div className="flex flex-col w-full pt-9 pb-7 px-5 border-b border-b-line">

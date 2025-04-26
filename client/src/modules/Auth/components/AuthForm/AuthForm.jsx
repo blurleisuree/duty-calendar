@@ -20,19 +20,25 @@ function AuthForm() {
   });
 
   const authWayIsAdmin = useAuthWayStore((state) => state.authWayIsAdmin);
-  const [sumbitErrors, setSubmitErrors] = useState(null);
   const onSubmit = async (data) => {
-    setSubmitErrors(null);
     try {
+      if (!document.startViewTransition) {
+        if (authWayIsAdmin) {
+          await login(data.password, "admin");
+          return;
+        }
+        await login(data.password);
+        return;
+      }
       if (authWayIsAdmin) {
         await login(data.password, "admin");
         return;
       }
       await login(data.password);
+
       reset();
     } catch (e) {
-      console.error("Error in AuthForm:", error);
-      setSubmitErrors(e);
+      console.error("Error in AuthForm:", e);
     }
   };
 

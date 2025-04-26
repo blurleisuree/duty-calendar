@@ -4,19 +4,23 @@ import { useMemo } from "react";
 
 import useDutyStore from "@shared/store/dutyStore";
 import useOrgStore from "@shared/store/orgStore";
+
+import useViewTransition from "@shared/hooks/useViewTransition";
+
 function Day({ day }) {
   const navigate = useNavigate();
   const activeOrg = useOrgStore((state) => state.activeOrg);
   const getDuties = useDutyStore((state) => state.getDuties);
   // const duties = useDutyStore((state) => state.duties);
 
+  const withTransition = useViewTransition();
   const handleDayClick = (day) => {
-    return () => {
+    return withTransition(() => {
       if (day) {
         const formattedDay = format(day, "yyyy-MM-dd");
         navigate(`/calendar/${formattedDay}`);
       }
-    };
+    });
   };
 
   const duties = getDuties(activeOrg === "Все организации" ? "" : activeOrg);

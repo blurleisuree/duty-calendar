@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import useOrgStore from "../../store/orgStore";
 import useDutyStore from "../../store/dutyStore";
 
+import useViewTransition from "@shared/hooks/useViewTransition";
+
 import OrgSelectorElem from "./OrgSelectorElem/OrgSelectorElem";
 
 import arrow from "@assets/icons/activeBottom.svg";
@@ -11,9 +13,10 @@ import arrow from "@assets/icons/activeBottom.svg";
 function OrgSelector() {
   const [dropDownIsActive, setDropDownIsActive] = useState(false);
 
-  const toggleDropDown = () => {
+  const withTransition = useViewTransition();
+  const toggleDropDown = withTransition(() => {
     setDropDownIsActive(!dropDownIsActive);
-  };
+  });
 
   const duties = useDutyStore((state) => state.duties);
   const { activeOrg, orgs, loading, error, getAllOrgs } = useOrgStore();

@@ -7,12 +7,16 @@ import Time from "../Time/Time";
 
 import { useState } from "react";
 
+import useViewTransition from "@shared/hooks/useViewTransition";
+
 function ItemData({ duty }) {
   const [isDetailsActive, setIsDetailsActive] = useState(false);
 
-  const toggleIsDetailsActive = () => {
-    setIsDetailsActive(!isDetailsActive);
-  };
+  const withTransition = useViewTransition();
+  const toggleIsDetailsActive = withTransition(() =>
+    setIsDetailsActive(!isDetailsActive)
+  );
+
   return (
     <>
       <div className="w-full pt-5 pb-5 px-5 font-300 pos-relative">
