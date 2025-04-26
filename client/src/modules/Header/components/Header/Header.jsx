@@ -21,7 +21,7 @@ function Header() {
   const openExitModal = useOpenExitModal(logout);
 
   return (
-    <div className="flex flex-col w-screen pt-9 pb-7 px-5 border-b border-b-line">
+    <div className="flex flex-col w-full pt-9 pb-7 px-5 border-b border-b-line">
       <div className="flex items-center justify-between">
         <div className="flex-1 flex justify-start">
           {date && (

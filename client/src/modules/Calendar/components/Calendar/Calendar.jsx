@@ -40,7 +40,7 @@ function Calendar() {
 
   return (
     <div
-      className="p-6 mt-2 max-w-full sm:max-w-lg mx-auto min-h-screen"
+      className="p-6 mt-2 w-full sm:max-w-lg mx-auto h-screen"
       {...handlers}
     >
       <CalendarNavigation />
