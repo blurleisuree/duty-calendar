@@ -1,5 +1,6 @@
 import { startOfMonth, endOfMonth, eachDayOfInterval, getDay } from "date-fns";
 import { useSwipeable } from "react-swipeable";
+import useViewTransition from "@shared/hooks/useViewTransition";
 
 import useCalendarStore from "../../store/CalendarStore";
 
@@ -27,9 +28,10 @@ function Calendar() {
     calendarDays.push(...Array(remainingSlots).fill(null));
   }
 
+  const withTransition = useViewTransition();
   const handlers = useSwipeable({
-    onSwipedLeft: () => shiftMonth("prev"),
-    onSwipedRight: () => shiftMonth("next"),
+    onSwipedLeft: withTransition(() => shiftMonth("next")),
+    onSwipedRight: withTransition(() => shiftMonth("prev")),
     swipeDuration: 500,
     preventScrollOnSwipe: true,
   });
@@ -37,7 +39,10 @@ function Calendar() {
   const daysArr = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
   return (
-    <div className="p-6 mt-2 max-w-full sm:max-w-lg mx-auto min-h-screen" {...handlers}>
+    <div
+      className="p-6 mt-2 max-w-full sm:max-w-lg mx-auto min-h-screen"
+      {...handlers}
+    >
       <CalendarNavigation />
       <div>
         <div className="grid grid-cols-7 text-center">

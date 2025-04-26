@@ -1,14 +1,16 @@
 import useCalendarStore from "../../store/CalendarStore";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
+import useViewTransition from "@shared/hooks/useViewTransition";
 
 import arrow from "@assets/icons/CalendarArrow.svg";
 
 function CalendarNavigation() {
   const { currentDate, shiftMonth } = useCalendarStore();
 
+  const withTransition = useViewTransition();
   const handleShiftMonth = (direction) => {
-    return () => shiftMonth(direction);
+    return withTransition(() => shiftMonth(direction));
   };
 
   return (

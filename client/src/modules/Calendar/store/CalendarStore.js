@@ -12,15 +12,7 @@ const useCalendarStore = create((set) => ({
           ? addMonths(state.currentDate, 1)
           : subMonths(state.currentDate, 1);
 
-      if (!document.startViewTransition) {
-        return { currentDate: newDate };
-      }
-
-      document.startViewTransition(() => {
-        set({ currentDate: newDate });
-      });
-
-      return state;
+      return { currentDate: newDate };
     });
   },
 }));
