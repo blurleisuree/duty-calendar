@@ -1,4 +1,4 @@
-import { Item } from "../../modules/Item/index";
+import { Item } from "@modules/Item/index";
 
 function ItemWrapper() {
   return (

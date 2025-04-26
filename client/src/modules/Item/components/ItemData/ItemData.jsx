@@ -1,6 +1,6 @@
-import SubText from "../../../../shared/components/UI/SubText/SubText";
-import Text from "../../../../shared/components/UI/Text/Text";
-import Phone from "../../../../shared/components/UI/Phone/Phone";
+import SubText from "@shared/components/UI/SubText/SubText";
+import Text from "@shared/components/UI/Text/Text";
+import Phone from "@shared/components/UI/Phone/Phone";
 import FullName from "../FullName/FullName";
 import Border from "../Border/Border";
 import Time from "../Time/Time";
@@ -43,7 +43,10 @@ function ItemData({ duty }) {
           {isDetailsActive && <Time time={duty.timeEnd}></Time>}
         </div>
       </div>
-      <Border handleClick={toggleIsDetailsActive} isDetailsActive={isDetailsActive}/>
+      <Border
+        handleClick={toggleIsDetailsActive}
+        isDetailsActive={isDetailsActive}
+      />
     </>
   );
 }

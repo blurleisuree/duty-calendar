@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { collection, getDocs, deleteDoc, addDoc } from "firebase/firestore";
-import { db } from "../../../firebase"; // Убедитесь, что путь правильный
+import { db } from "../../../firebase"; 
 import * as XLSX from "xlsx";
 
 const useDutyStore = create((set, get) => ({

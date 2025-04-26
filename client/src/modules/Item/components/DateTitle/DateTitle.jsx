@@ -3,7 +3,7 @@ import { ru } from "date-fns/locale";
 
 import { useNavigate } from "react-router";
 
-import arrow from "../../../../assets/icons/itemArrow.svg";
+import arrow from "@assets/icons/itemArrow.svg";
 
 function DateTitle({ date }) {
   const dayOfWeekName = format(date, "EEEE", { locale: ru });

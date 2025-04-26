@@ -2,12 +2,12 @@ import { useState } from "react";
 import useAuthStore from "../../store/authStore";
 import useAuthWayStore from "../../store/authWayStore";
 
-import useAuthForm from "../../../../shared/hooks/useAuthForm";
+import useAuthForm from "@shared/hooks/useAuthForm";
 
 import universalSchema from "../../schemas/authSchema";
 
-import Button from "../../../../shared/components/UI/Button/Button";
-import PassInput from "../../../../shared/components/UI/PassInput/PassInput";
+import Button from "@shared/components/UI/Button/Button";
+import PassInput from "@shared/components/UI/PassInput/PassInput";
 import ToggleUser from "../ToggleUser/ToggleUser";
 
 function AuthForm() {

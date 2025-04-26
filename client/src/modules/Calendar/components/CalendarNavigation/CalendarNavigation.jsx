@@ -2,7 +2,7 @@ import useCalendarStore from "../../store/CalendarStore";
 import { subMonths, addMonths, format } from "date-fns";
 import { ru } from "date-fns/locale";
 
-import arrow from "../../../../assets/icons/CalendarArrow.svg";
+import arrow from "@assets/icons/CalendarArrow.svg";
 
 function CalendarNavigation() {
   const { currentDate, setCurrentDate } = useCalendarStore();

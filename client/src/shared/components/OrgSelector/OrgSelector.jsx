@@ -6,7 +6,7 @@ import useDutyStore from "../../store/dutyStore";
 
 import OrgSelectorElem from "./OrgSelectorElem/OrgSelectorElem";
 
-import arrow from "../../../assets/icons/activeBottom.svg";
+import arrow from "@assets/icons/activeBottom.svg";
 
 function OrgSelector() {
   const [dropDownIsActive, setDropDownIsActive] = useState(false);

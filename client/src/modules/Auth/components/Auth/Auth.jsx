@@ -1,4 +1,4 @@
-import Logo from "../../../../shared/components/UI/Logo/Logo";
+import Logo from "@shared/components/UI/Logo/Logo";
 import AuthForm from "../AuthForm/AuthForm";
 import AuthFooter from "../AuthFooter/AuthFooter";
 

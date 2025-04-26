@@ -1,7 +1,7 @@
 import classes from "./PassInput.module.css";
 import { useEffect, useState } from "react";
-import eyeOpen from "../../../../assets/icons/eyeOpen.svg";
-import eyeClose from "../../../../assets/icons/eyeClose.svg";
+import eyeOpen from "@assets/icons/eyeOpen.svg";
+import eyeClose from "@assets/icons/eyeClose.svg";
 
 function PassInput({
   register = function () {},

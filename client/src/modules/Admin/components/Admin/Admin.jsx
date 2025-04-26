@@ -1,12 +1,12 @@
-import FileInput from "../../../../shared/components/UI/FileInput/FileInput";
-import Button from "../../../../shared/components/UI/Button/Button";
-import SubText from "../../../../shared/components/UI/SubText/SubText";
-import Error from "../../../../shared/components/UI/Error/Error";
+import FileInput from "@shared/components/UI/FileInput/FileInput";
+import Button from "@shared/components/UI/Button/Button";
+import SubText from "@shared/components/UI/SubText/SubText";
+import Error from "@shared/components/UI/Error/Error";
 import ErrorAdmin from "../ErrorAdmin/ErrorAdmin";
 
-import dutyApiStore from "../../../../shared/store/dutyStore";
-import useMessageStore from "../../../../shared/store/messageStore";
-import useAuthStore from "../../../Auth/store/authStore";
+import dutyApiStore from "@shared/store/dutyStore";
+import useMessageStore from "@shared/store/messageStore";
+import { useAuthStore } from "../../../Auth/index";
 
 function Admin() {
   const isAdmin = useAuthStore((state) => state.isAdmin);
@@ -33,11 +33,7 @@ function Admin() {
 
   return (
     <div className="p-6 mt-2 max-w-full sm:max-w-lg mx-auto">
-      <form
-        id="uploadForm"
-        className="w-full"
-        onSubmit={onSubmit}
-      >
+      <form id="uploadForm" className="w-full" onSubmit={onSubmit}>
         <FileInput
           id="excelFile"
           name="excelFile"

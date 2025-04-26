@@ -1,15 +1,14 @@
-import OrgSelector from "../../../../shared/components/OrgSelector/OrgSelector";
-import ReturnElem from "../../../../shared/components/UI/ReturnElem/ReturnElem";
-import Logo from "../../../../shared/components/UI/Logo/Logo";
+import OrgSelector from "@shared/components/OrgSelector/OrgSelector";
+import ReturnElem from "@shared/components/UI/ReturnElem/ReturnElem";
+import Logo from "@shared/components/UI/Logo/Logo";
 
-import useValidateIsoDate from "../../../../shared/hooks/useValidateISODate";
+import useValidateIsoDate from "@shared/hooks/useValidateISODate";
 
-// import upload from "../../../../assets/icons/upload.svg";
-import settings from "../../../../assets/icons/settings.svg";
-import exit from "../../../../assets/icons/exit.svg";
+import settings from "@assets/icons/settings.svg";
+import exit from "@assets/icons/exit.svg";
 
 import { useParams, Link, useLocation } from "react-router";
-import useOpenExitModal from "../../../../shared/hooks/useOpenExitModal.jsx";
+import useOpenExitModal from "@shared/hooks/useOpenExitModal.jsx";
 import useAuthStore from "../../../Auth/store/authStore.js";
 
 function Header() {
@@ -33,7 +32,10 @@ function Header() {
           {url === "/admin" && <ReturnElem path="-1"></ReturnElem>}
         </div>
         <Link to="/calendar" className="flex-0">
-          <Logo type="mini" className="cursor-pointer active:opacity-40 transition" />
+          <Logo
+            type="mini"
+            className="cursor-pointer active:opacity-40 transition"
+          />
         </Link>
         <div className="flex items-center flex-1  justify-end">
           <img

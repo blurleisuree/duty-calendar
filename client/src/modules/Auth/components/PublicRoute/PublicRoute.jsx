@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router";
 import useAuthStore from "../../store/authStore";
-import Loader from '../../../../shared/components/UI/Loader/Loader';
+import Loader from "@shared/components/UI/Loader/Loader";
 
 function PublicRoute() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -13,6 +13,3 @@ function PublicRoute() {
   return !isAuthenticated ? <Outlet /> : <Navigate to="/" replace />;
 }
 export default PublicRoute;
-
-
-

@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router";
 import { format } from "date-fns";
 import { useMemo } from "react";
-import useDutyStore from "../../../../shared/store/dutyStore";
-import useOrgStore from "../../../../shared/store/orgStore";
+
+import useDutyStore from "@shared/store/dutyStore";
+import useOrgStore from "@shared/store/orgStore";
 function Day({ day }) {
   const navigate = useNavigate();
   const activeOrg = useOrgStore((state) => state.activeOrg);

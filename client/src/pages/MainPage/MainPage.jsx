@@ -1,13 +1,12 @@
 import { Outlet } from "react-router";
 import { useEffect, useState } from "react";
 
-import useMessageStore from "../../shared/store/messageStore.js";
-import useDutyStore from "../../shared/store/dutyStore.js";
-import { useAuthStore } from "../../modules/Auth/index.js";
+import useMessageStore from "@shared/store/messageStore.js";
+import useDutyStore from "@shared/store/dutyStore.js";
 
-import { Header } from "../../modules/Header/index";
+import { Header } from "@modules/Header/index";
 
-import Loader from "../../shared/components/UI/Loader/Loader.jsx";
+import Loader from "@shared/components/UI/Loader/Loader.jsx";
 
 function MainPage() {
   const fetchDuties = useDutyStore((state) => state.fetchDuties);

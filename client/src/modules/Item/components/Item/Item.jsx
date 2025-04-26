@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
-import useOrgStore from "../../../../shared/store/orgStore";
-import useDutyStore from "../../../../shared/store/dutyStore";
-import useValidateIsoDate from "../../../../shared/hooks/useValidateISODate";
+import useOrgStore from "@shared/store/orgStore";
+import useDutyStore from "@shared/store/dutyStore";
+import useValidateIsoDate from "@shared/hooks/useValidateISODate";
 
 import DateTitle from "../DateTitle/DateTitle";
 import ItemData from "../ItemData/ItemData";

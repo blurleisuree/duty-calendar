@@ -1,4 +1,4 @@
-import { Calendar } from "../../modules/Calendar/index";
+import { Calendar } from "@modules/Calendar/index";
 
 function CalendarWrapper() {
   return (

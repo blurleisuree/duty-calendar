@@ -4,6 +4,15 @@ import UnoCSS from "unocss/vite";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      "@": new URL("./src", import.meta.url).pathname,
+      "@assets": new URL("./src/assets", import.meta.url).pathname,
+      "@modules": new URL("./src/modules", import.meta.url).pathname,
+      "@pages": new URL("./src/pages", import.meta.url).pathname,
+      "@shared": new URL("./src/shared", import.meta.url).pathname,
+    },
+  },
   plugins: [
     react(),
     UnoCSS(),

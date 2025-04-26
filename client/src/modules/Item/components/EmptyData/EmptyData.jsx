@@ -1,4 +1,4 @@
-import error from '../../../../assets/icons/error.svg'
+import error from '@assets/icons/error.svg'
 
 function EmptyData() {
   return (
