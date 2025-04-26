@@ -10,6 +10,9 @@ import ItemData from "../ItemData/ItemData";
 import EmptyData from "../EmptyData/EmptyData";
 import ErrorPath from "../ErrorPath/ErrorPath";
 
+import useChangeDay from "../../hooks/useChangeDay";
+import { useSwipeable } from "react-swipeable";
+
 function Item() {
   const activeOrg = useOrgStore((state) => state.activeOrg);
   const getDuties = useDutyStore((state) => state.getDuties);
@@ -27,10 +30,18 @@ function Item() {
     );
   }, [activeOrg, date, getDuties, isDateValid]);
 
+  const changeDay = useChangeDay();
+  const handlers = useSwipeable({
+    onSwipedLeft: () => changeDay("next", date)(),
+    onSwipedRight: () => changeDay("prev", date)(),
+    swipeDuration: 500,
+    preventScrollOnSwipe: true,
+  });
+
   if (isDateValid) return <ErrorPath />;
 
   return (
-    <div className="pb-10">
+    <div className="pb-10 min-h-screen" {...handlers}>
       <DateTitle date={date} />
       {filteredDuties.length ? (
         filteredDuties.map((duty, index) => {

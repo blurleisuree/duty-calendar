@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { collection, getDocs, deleteDoc, addDoc } from "firebase/firestore";
-import { db } from "../../../firebase"; 
+import { db } from "../../../firebase";
 import * as XLSX from "xlsx";
 
 const useDutyStore = create((set, get) => ({
@@ -57,9 +57,16 @@ const useDutyStore = create((set, get) => ({
         localStorage.setItem("dutiesData", JSON.stringify(cache));
         console.log("Data fetched from Firestore and cached");
       }
+      
+      if (!document.startViewTransition) {
+        set({ duties: dutiesData,  isLoading:false });
+        return;
+      }
 
-      set({ duties: dutiesData, isLoading: false });
-      return get().duties
+      document.startViewTransition(() => {
+        set({ duties: dutiesData, isLoading:false });
+      });
+      return dutiesData;
     } catch (error) {
       console.error("Error fetching duties from Firestore:", error);
 

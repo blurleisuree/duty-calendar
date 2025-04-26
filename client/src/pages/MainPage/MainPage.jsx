@@ -19,6 +19,7 @@ function MainPage() {
     const loadDuties = async () => {
       try {
         const duties = await fetchDuties();
+        
         if (duties.length < 1) addMessage('Данные дежурст не найдены')
 
         if (!navigator.onLine) {

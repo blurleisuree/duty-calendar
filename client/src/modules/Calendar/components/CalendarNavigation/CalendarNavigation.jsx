@@ -8,11 +8,25 @@ function CalendarNavigation() {
   const { currentDate, setCurrentDate } = useCalendarStore();
 
   const handlePreviousMonth = () => {
-    setCurrentDate(subMonths(currentDate, 1));
+    if (!document.startViewTransition) {
+      setCurrentDate(subMonths(currentDate, 1));
+      return;
+    }
+
+    document.startViewTransition(() => {
+      setCurrentDate(subMonths(currentDate, 1));
+    });
   };
 
   const handleNextMonth = () => {
-    setCurrentDate(addMonths(currentDate, 1));
+    if (!document.startViewTransition) {
+      setCurrentDate(addMonths(currentDate, 1));
+      return;
+    }
+
+    document.startViewTransition(() => {
+      setCurrentDate(addMonths(currentDate, 1));
+    });
   };
 
   return (
