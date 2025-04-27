@@ -1,6 +1,6 @@
 import { Calendar } from "@modules/Calendar/index";
 
-function CalendarWrapper() {
+function CalendarPage() {
   return (
     <div>
       <Calendar/>
@@ -8,4 +8,4 @@ function CalendarWrapper() {
   );
 }
 
-export default CalendarWrapper;
+export default CalendarPage;

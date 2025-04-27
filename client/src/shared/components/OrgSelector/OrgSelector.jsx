@@ -19,7 +19,7 @@ function OrgSelector() {
   });
 
   const duties = useDutyStore((state) => state.duties);
-  const { activeOrg, orgs, loading, error, getAllOrgs } = useOrgStore();
+  const { activeOrg, orgs, getAllOrgs, error, loading } = useOrgStore();
 
   useEffect(() => {
     getAllOrgs(duties);
@@ -39,15 +39,19 @@ function OrgSelector() {
           <div
             className={`block absolute mt-5 py-4 w-max bg-white rounded-lg z-50 ${classes.popup}`}
           >
-            {orgs.map((org, index) => (
+            {orgs.map((org) => (
               <OrgSelectorElem
-                key={index + org}
+                key={org}
                 toggleDropDown={toggleDropDown}
                 org={org}
               />
             ))}
           </div>
         </>
+      )}
+      {loading && <div className="mt-2 text-gray-500">Загрузка...</div>}
+      {error && (
+        <div className="mt-2 text-red-500">Ошибка: {error.message}</div>
       )}
     </div>
   );

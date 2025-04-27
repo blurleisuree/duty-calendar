@@ -1,11 +1,11 @@
 import { Navigate } from "react-router";
 import { format } from "date-fns";
 
-import MainPage from "../../pages/MainPage/MainPage";
-import Calendar from "../../pages/CalendarWrapper/CalendarWrapper";
-import Item from "../../pages/ItemWrapper/ItemWrapper";
-import AuthPage from "../../pages/AuthPage/AuthPage";
-import AdminWrapper from "../../pages/AdminWrapper/AdminWrapper";
+import Main from "../../pages/MainPage/MainPage";
+import Calendar from "../../pages/CalendarPage/CalendarPage";
+import Item from "../../pages/ItemPage/ItemPage";
+import Auth from "../../pages/AuthPage/AuthPage";
+import Admin from "../../pages/AdminPage/AdminPage";
 
 import { PublicRoute, ProtectedRoute } from "../../modules/Auth";
 
@@ -17,7 +17,7 @@ export const routeConfig = [
     children: [
       {
         path: "/login",
-        element: <AuthPage />,
+        element: <Auth />,
       },
     ],
   },
@@ -26,18 +26,18 @@ export const routeConfig = [
     children: [
       {
         path: "/",
-        element: <MainPage />,
+        element: <Main />,
         children: [
           { path: "", element: <Navigate to={`calendar/${today}`} replace /> },
           { path: "calendar", element: <Calendar /> },
           { path: "calendar/:date", element: <Item /> },
-          { path: "admin", element: <AdminWrapper /> },
+          { path: "admin", element: <Admin /> },
         ],
       },
     ],
   },
   {
     path: "*",
-    element: <Navigate to="/calendar" replace />,
+    element: <Navigate to="/" replace />,
   },
 ];

@@ -1,14 +1,15 @@
-import { useState } from "react";
 import useAuthStore from "../../store/authStore";
 import useAuthWayStore from "../../store/authWayStore";
 
 import useAuthForm from "@shared/hooks/useAuthForm";
+import useViewTransition from "@shared/hooks/useViewTransition";
 
 import universalSchema from "../../schemas/authSchema";
 
 import Button from "@shared/components/UI/Button/Button";
 import PassInput from "@shared/components/UI/PassInput/PassInput";
 import ToggleUser from "../ToggleUser/ToggleUser";
+import Error from "../../../../shared/components/UI/Error/Error";
 
 function AuthForm() {
   const { login, loading, error } = useAuthStore();
@@ -19,28 +20,20 @@ function AuthForm() {
     universalSchema: universalSchema,
   });
 
+  const withTransition = useViewTransition();
   const authWayIsAdmin = useAuthWayStore((state) => state.authWayIsAdmin);
-  const onSubmit = async (data) => {
+  const onSubmit = withTransition(async (data) => {
     try {
-      if (!document.startViewTransition) {
-        if (authWayIsAdmin) {
-          await login(data.password, "admin");
-          return;
-        }
-        await login(data.password);
-        return;
-      }
       if (authWayIsAdmin) {
         await login(data.password, "admin");
         return;
       }
       await login(data.password);
-
       reset();
     } catch (e) {
       console.error("Error in AuthForm:", e);
     }
-  };
+  });
 
   return (
     <form
@@ -59,7 +52,7 @@ function AuthForm() {
       <Button type="submit" className="w-full py-3 mt-4 " disabled={loading}>
         Войти
       </Button>
-      <span className="text-sm mt-3 block text-red-600">{error}</span>
+      <Error className="mt-3">{error}</Error>
       <ToggleUser />
     </form>
   );

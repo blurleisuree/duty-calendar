@@ -1,6 +1,6 @@
 import { Admin } from "@modules/Admin/index";
-function AdminWrapper() {
+function AdminPage() {
   return <Admin />;
 }
 
-export default AdminWrapper;
+export default AdminPage;

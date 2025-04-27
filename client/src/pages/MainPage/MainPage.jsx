@@ -14,24 +14,25 @@ function MainPage() {
   const error = useDutyStore((state) => state.error);
   const [offlineMessage, setOfflineMessage] = useState(null);
 
-  const addMessage = useMessageStore((state) => state.addMessage)
+  const addMessage = useMessageStore((state) => state.addMessage);
   useEffect(() => {
     const loadDuties = async () => {
       try {
         const duties = await fetchDuties();
-        
-        if (duties.length < 1) addMessage('Данные дежурст не найдены')
+
+        if (duties.length < 1) addMessage("Данные дежурст не найдены");
 
         if (!navigator.onLine) {
           setOfflineMessage("Вы оффлайн. Используются сохраненные данные.");
         }
       } catch (err) {
+        console.log(err);
         if (!navigator.onLine) {
           setOfflineMessage("Вы оффлайн. Данные недоступны.");
         }
       }
     };
-    loadDuties()
+    loadDuties();
   }, [fetchDuties]);
 
   if (isLoading) return <Loader fullPage={true} />;

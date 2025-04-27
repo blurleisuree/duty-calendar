@@ -1,6 +1,6 @@
 import { Item } from "@modules/Item/index";
 
-function ItemWrapper() {
+function ItemPage() {
   return (
     <div className="">
       <Item />
@@ -8,4 +8,4 @@ function ItemWrapper() {
   );
 }
 
-export default ItemWrapper;
+export default ItemPage;
