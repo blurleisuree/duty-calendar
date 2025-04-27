@@ -39,3 +39,5 @@ emulator-data/
 firebase-debug.log
 firebase-debug.*.log
 .firebase/
+
+.xlsx

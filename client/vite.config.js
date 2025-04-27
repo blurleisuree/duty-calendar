@@ -33,8 +33,8 @@ export default defineConfig({
         "assets/fonts/**/*.{woff,woff2,ttf,otf}",
       ],
       manifest: {
-        name: "DutyDays",
-        short_name: "DutyDays",
+        name: "DutyCalendar",
+        short_name: "DutyCalendar",
         description: "Приложение для управления дежурствами",
         theme_color: "#ffffff",
         background_color: "#ffffff",
