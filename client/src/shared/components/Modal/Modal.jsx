@@ -1,4 +1,4 @@
-import cross from "../../../assets/icons/cross.svg";
+import cross from "@assets/icons/cross.svg";
 
 import useModalStore from "../../store/modalStore";
 

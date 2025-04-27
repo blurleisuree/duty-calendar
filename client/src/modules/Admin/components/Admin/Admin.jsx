@@ -1,12 +1,12 @@
-import FileInput from "../../../../shared/components/UI/FileInput/FileInput";
-import Button from "../../../../shared/components/UI/Button/Button";
-import SubText from "../../../../shared/components/UI/SubText/SubText";
-import Error from "../../../../shared/components/UI/Error/Error";
-import ErrorAdmin from "../ErrorAdmin/ErrorAdmin";
+import FileInput from "@shared/components/UI/FileInput/FileInput";
+import Button from "@shared/components/UI/Button/Button";
+import SubText from "@shared/components/UI/SubText/SubText";
+import Error from "@shared/components/UI/Error/Error";
+import ErrorScreen from "@shared/components/UI/ErrorScreen/ErrorScreen";
 
-import dutyApiStore from "../../../../shared/store/dutyStore";
-import useMessageStore from "../../../../shared/store/messageStore";
-import useAuthStore from "../../../Auth/store/authStore";
+import dutyApiStore from "@shared/store/dutyStore";
+import useMessageStore from "@shared/store/messageStore";
+import { useAuthStore } from "../../../Auth/index";
 
 function Admin() {
   const isAdmin = useAuthStore((state) => state.isAdmin);
@@ -15,29 +15,30 @@ function Admin() {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    const file = event.target.elements.excelFile.files[0]; // Получаем файл из input
+    const file = event.target.elements.excelFile.files[0];
     if (!file) {
       addMessage("Пожалуйста, выберите файл");
       return;
     }
-
     try {
-      const res = await addNewDuties(file); // Передаем файл напрямую
+      const res = await addNewDuties(file);
       addMessage(res.message);
     } catch (err) {
       addMessage("Ошибка загрузки: " + err.message);
     }
   };
 
-  if (!isAdmin) return <ErrorAdmin />;
+  if (!isAdmin)
+    return (
+      <ErrorScreen>
+        Необходимо войти как <br />
+        администратор
+      </ErrorScreen>
+    );
 
   return (
     <div className="p-6 mt-2 max-w-full sm:max-w-lg mx-auto">
-      <form
-        id="uploadForm"
-        className="w-full"
-        onSubmit={onSubmit}
-      >
+      <form id="uploadForm" className="w-full" onSubmit={onSubmit}>
         <FileInput
           id="excelFile"
           name="excelFile"

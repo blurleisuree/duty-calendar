@@ -1,10 +1,15 @@
-import { useState } from "react";
-import Button from "../../../../shared/components/UI/Button/Button";
-import PassInput from "../../../../shared/components/UI/PassInput/PassInput";
-import useAuthForm from "../../../../shared/hooks/useAuthForm";
 import useAuthStore from "../../store/authStore";
+import useAuthWayStore from "../../store/authWayStore";
+
+import useAuthForm from "@shared/hooks/useAuthForm";
+import useViewTransition from "@shared/hooks/useViewTransition";
 
 import universalSchema from "../../schemas/authSchema";
+
+import Button from "@shared/components/UI/Button/Button";
+import PassInput from "@shared/components/UI/PassInput/PassInput";
+import ToggleUser from "../ToggleUser/ToggleUser";
+import Error from "../../../../shared/components/UI/Error/Error";
 
 function AuthForm() {
   const { login, loading, error } = useAuthStore();
@@ -15,26 +20,20 @@ function AuthForm() {
     universalSchema: universalSchema,
   });
 
-  const [sumbitErrors, setSubmitErrors] = useState(null);
-  const onSubmit = async (data) => {
-    setSubmitErrors(null);
+  const withTransition = useViewTransition();
+  const authWayIsAdmin = useAuthWayStore((state) => state.authWayIsAdmin);
+  const onSubmit = withTransition(async (data) => {
     try {
-      if (isAdmin) {
-        await login(data.password, 'admin');
-        return
+      if (authWayIsAdmin) {
+        await login(data.password, "admin");
+        return;
       }
       await login(data.password);
       reset();
     } catch (e) {
-      console.error("Error in AuthForm:", error);
-      setSubmitErrors(e);
+      console.error("Error in AuthForm:", e);
     }
-  };
-
-  const [isAdmin, setIsAdmin] = useState(false);
-  const toggleIsAdmin = () => {
-    setIsAdmin(!isAdmin);
-  };
+  });
 
   return (
     <form
@@ -50,19 +49,11 @@ function AuthForm() {
       >
         Пароль
       </PassInput>
-      {/* disabled={loading} */}
-      <Button type="submit" className="w-full py-3 mt-4">
+      <Button type="submit" className="w-full py-3 mt-4 " disabled={loading}>
         Войти
       </Button>
-      <span className="text-sm mt-3 block text-red-600">{error}</span>
-      <p
-        className="mt-5 text-center text-active underline-1 underline"
-        onClick={toggleIsAdmin}
-      >
-        {isAdmin
-          ? "Войти как обычный пользователь"
-          : " Войти как администратор"}
-      </p>
+      <Error className="mt-3">{error}</Error>
+      <ToggleUser />
     </form>
   );
 }

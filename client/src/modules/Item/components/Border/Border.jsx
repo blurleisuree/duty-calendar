@@ -1,6 +1,6 @@
 import classes from "./Border.module.css";
 
-import arrow from "../../../../assets/icons/activeBottomGray.svg";
+import arrow from "@assets/icons/activeBottomGray.svg";
 
 function Border({ handleClick, isDetailsActive }) {
   return (

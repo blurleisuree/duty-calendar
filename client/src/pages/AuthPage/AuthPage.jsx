@@ -1,4 +1,4 @@
-import  {Auth}  from "../../modules/Auth/index.js";
+import  {Auth}  from "@modules/Auth/index.js";
 
 function AuthPage() {
   return (

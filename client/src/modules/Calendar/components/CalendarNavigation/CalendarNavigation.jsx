@@ -1,18 +1,18 @@
-import useCalendarStore from "../../store/CalendarStore";
-import { subMonths, addMonths, format } from "date-fns";
+import { format } from "date-fns";
 import { ru } from "date-fns/locale";
 
-import arrow from "../../../../assets/icons/CalendarArrow.svg";
+import useCalendarStore from "../../store/CalendarStore";
+
+import useViewTransition from "@shared/hooks/useViewTransition";
+
+import NavigationArrow from "@shared/components/UI/NavigationArrow/NavigationArrow";
 
 function CalendarNavigation() {
-  const { currentDate, setCurrentDate } = useCalendarStore();
+  const { currentDate, shiftMonth } = useCalendarStore();
 
-  const handlePreviousMonth = () => {
-    setCurrentDate(subMonths(currentDate, 1));
-  };
-
-  const handleNextMonth = () => {
-    setCurrentDate(addMonths(currentDate, 1));
+  const withTransition = useViewTransition();
+  const handleShiftMonth = (direction) => {
+    return withTransition(() => shiftMonth(direction));
   };
 
   return (
@@ -21,12 +21,9 @@ function CalendarNavigation() {
         {format(currentDate, "LLLL yyyy", { locale: ru })}
       </h2>
       <div className="flex items-center min-w-26 justify-between">
-        <button onClick={handlePreviousMonth} className="cursor-pointer p-2">
-          <img src={arrow} alt="arrow" />
-        </button>
-        <button onClick={handleNextMonth} className="cursor-pointer p-2">
-          <img src={arrow} alt="arrow" className="transform rotate-180" />
-        </button>
+        <NavigationArrow handleClick={handleShiftMonth("prev")} />
+        <NavigationArrow className="rotate-180" handleClick={handleShiftMonth("next")}
+        />
       </div>
     </div>
   );

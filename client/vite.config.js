@@ -4,6 +4,19 @@ import UnoCSS from "unocss/vite";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
+  server: {
+    host: "0.0.0.0",
+    port: 5173, 
+  },
+  resolve: {
+    alias: {
+      "@": new URL("./src", import.meta.url).pathname,
+      "@assets": new URL("./src/assets", import.meta.url).pathname,
+      "@modules": new URL("./src/modules", import.meta.url).pathname,
+      "@pages": new URL("./src/pages", import.meta.url).pathname,
+      "@shared": new URL("./src/shared", import.meta.url).pathname,
+    },
+  },
   plugins: [
     react(),
     UnoCSS(),
@@ -17,10 +30,11 @@ export default defineConfig({
         "favicons/apple-touch-icon.png",
         "favicons/pwa-192x192.png",
         "favicons/pwa-512x512.png",
+        "assets/fonts/**/*.{woff,woff2,ttf,otf}",
       ],
       manifest: {
-        name: "DutyDays",
-        short_name: "DutyDays",
+        name: "DutyCalendar",
+        short_name: "DutyCalendar",
         description: "Приложение для управления дежурствами",
         theme_color: "#ffffff",
         background_color: "#ffffff",
@@ -47,7 +61,7 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,woff,woff2,ttf,otf}"],
         runtimeCaching: [
           {
             urlPattern: ({ request }) => request.destination === "document",
@@ -88,6 +102,20 @@ export default defineConfig({
               expiration: {
                 maxEntries: 20, // Максимум 20 записей в кэше
                 maxAgeSeconds: 7 * 24 * 60 * 60, // Хранить 7 дней
+              },
+              cacheableResponse: {
+                statuses: [0, 200], // Кэшировать успешные ответы
+              },
+            },
+          },
+          {
+            urlPattern: ({ request }) => request.destination === "font",
+            handler: "CacheFirst",
+            options: {
+              cacheName: "font-cache",
+              expiration: {
+                maxEntries: 10, // Максимум 10 шрифтов
+                maxAgeSeconds: 365 * 24 * 60 * 60, // Хранить 1 год
               },
               cacheableResponse: {
                 statuses: [0, 200], // Кэшировать успешные ответы

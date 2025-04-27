@@ -1,49 +1,70 @@
-import SubText from "../../../../shared/components/UI/SubText/SubText";
-import Text from "../../../../shared/components/UI/Text/Text";
-import Phone from "../../../../shared/components/UI/Phone/Phone";
+import { useCallback } from "react";
+
+import SubText from "@shared/components/UI/SubText/SubText";
+import Text from "@shared/components/UI/Text/Text";
+import Phone from "@shared/components/UI/Phone/Phone";
 import FullName from "../FullName/FullName";
 import Border from "../Border/Border";
 import Time from "../Time/Time";
+import ItemDataElem from "../ItemDataElem/ItemDataElem";
 
 import { useState } from "react";
+
+import useViewTransition from "@shared/hooks/useViewTransition";
 
 function ItemData({ duty }) {
   const [isDetailsActive, setIsDetailsActive] = useState(false);
 
-  const toggleIsDetailsActive = () => {
-    setIsDetailsActive(!isDetailsActive);
-  };
+  const withTransition = useViewTransition();
+  const toggleDetails = useCallback(() => {
+    withTransition(() => {
+      setIsDetailsActive((prev) => !prev);
+    })();
+  }, [withTransition]);
+
+  const {
+    organization = "",
+    fullName = "Не указано",
+    phone = "",
+    position = "",
+    timeStart = "",
+    timeEnd = "",
+  } = duty || {};
+
   return (
     <>
       <div className="w-full pt-5 pb-5 px-5 font-300 pos-relative">
-        <SubText>{duty?.organization}</SubText>
+        <SubText>{organization}</SubText>
         {isDetailsActive && <SubText className="mt-3">ФИО</SubText>}
         <div
           className={`flex items-center justify-between w-full ${
             isDetailsActive ? "mt-1 flex-col items-baseline" : "mt-3"
           }`}
         >
-          <FullName
-            fullName={duty?.fullName || "undefind"}
-            isFull={isDetailsActive}
-          />
+          <FullName fullName={fullName} isFull={isDetailsActive} />
           {isDetailsActive && (
             <SubText className=" mt-3">Номер телефона</SubText>
           )}
-          <Phone>{duty?.phone}</Phone>
-          {isDetailsActive && <SubText className=" mt-3">Должность</SubText>}
-          {isDetailsActive && <Text>{duty?.position}</Text>}
+          <Phone>{phone}</Phone>
           {isDetailsActive && (
-            <SubText className=" mt-3">Время дежурства с:</SubText>
+            <>
+              <ItemDataElem>
+                <SubText className=" mt-3">Должность</SubText>
+                <Text>{position}</Text>
+              </ItemDataElem>
+              <ItemDataElem>
+                <SubText className=" mt-3">Время дежурства с:</SubText>
+                <Time time={timeStart}></Time>
+              </ItemDataElem>
+              <ItemDataElem>
+                <SubText className=" mt-3">Время дежурства по:</SubText>
+                <Time time={timeEnd} />
+              </ItemDataElem>
+            </>
           )}
-          {isDetailsActive && <Time time={duty.timeStart}></Time>}
-          {isDetailsActive && (
-            <SubText className=" mt-3">Время дежурства по:</SubText>
-          )}
-          {isDetailsActive && <Time time={duty.timeEnd}></Time>}
         </div>
       </div>
-      <Border handleClick={toggleIsDetailsActive} isDetailsActive={isDetailsActive}/>
+      <Border handleClick={toggleDetails} isDetailsActive={isDetailsActive} />
     </>
   );
 }

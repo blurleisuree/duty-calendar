@@ -1,5 +1,5 @@
-import logoMini from "../../../../assets/icons/LogoMini.svg";
-import logoFull from "../../../../assets/icons/logoFull.svg";
+import logoMini from "@assets/icons/LogoMini.svg";
+import logoFull from "@assets/icons/logoFull.svg";
 
 function Logo({ className, type = 'logoMini'}) {
   const logoMap = {

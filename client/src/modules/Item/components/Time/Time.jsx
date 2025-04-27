@@ -1,4 +1,4 @@
-import Text from "../../../../shared/components/UI/Text/Text";
+import Text from "@shared/components/UI/Text/Text";
 
 function Time({ time, className }) {
   const formatTimeFromFraction = (fraction) => {

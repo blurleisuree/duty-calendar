@@ -1,12 +1,15 @@
 import useOrgStore from "../../../store/orgStore";
 
+import useViewTransition from "@shared/hooks/useViewTransition";
+
 function OrgSelectorElem({ org, toggleDropDown }) {
   const setActiveOrg = useOrgStore((state) => state.setActiveOrg);
 
-  function handleClick() {
+  const withTransition = useViewTransition();
+  const handleClick = withTransition(() => {
     setActiveOrg(org || "Все организации");
     toggleDropDown();
-  }
+  });
 
   return (
     <div

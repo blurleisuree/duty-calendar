@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { collection, getDocs, deleteDoc, addDoc } from "firebase/firestore";
-import { db } from "../../../firebase"; // Убедитесь, что путь правильный
+import { db } from "../../../firebase";
 import * as XLSX from "xlsx";
 
 const useDutyStore = create((set, get) => ({
@@ -24,21 +24,21 @@ const useDutyStore = create((set, get) => ({
 
   fetchDuties: async () => {
     set({ isLoading: true, error: null });
-  
+
     try {
       // Проверяем наличие интернета
       if (!navigator.onLine) {
         throw new Error("No internet connection, falling back to cache");
       }
-  
+
       if (!db) {
         throw new Error("Firestore db is not initialized");
       }
-  
+
       const dutiesCollection = collection(db, "duties");
       const snapshot = await getDocs(dutiesCollection);
       let dutiesData = [];
-  
+
       if (!snapshot.empty) {
         dutiesData = snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -47,7 +47,7 @@ const useDutyStore = create((set, get) => ({
       } else {
         console.log("Firestore collection is empty");
       }
-  
+
       // Сохраняем в localStorage только если получили данные
       if (dutiesData.length > 0) {
         const cache = {
@@ -55,31 +55,40 @@ const useDutyStore = create((set, get) => ({
           timestamp: Date.now(),
         };
         localStorage.setItem("dutiesData", JSON.stringify(cache));
-        console.log("Data fetched from Firestore and cached:", dutiesData);
+        console.log("Data fetched from Firestore and cached");
       }
-  
-      set({ duties: dutiesData, isLoading: false });
+      
+      if (!document.startViewTransition) {
+        set({ duties: dutiesData,  isLoading:false });
+        return;
+      }
+
+      document.startViewTransition(() => {
+        set({ duties: dutiesData, isLoading:false });
+      });
+      return dutiesData;
     } catch (error) {
       console.error("Error fetching duties from Firestore:", error);
-  
+
       // Используем кэш из localStorage
       const cached = localStorage.getItem("dutiesData");
       if (cached) {
         const { data, timestamp } = JSON.parse(cached);
         const ageInSeconds = (Date.now() - timestamp) / 1000;
-  
+
         if (ageInSeconds > 7 * 24 * 60 * 60) {
           console.warn("Cached duties data is older than 7 days");
         }
-  
-        console.log("Using cached duties data from localStorage:", data);
+
+        console.log("Using cached duties data from localStorage:");
         set({ duties: data, isLoading: false });
         return;
       }
-  
+
       // Если кэша нет, устанавливаем ошибку
       set({
-        error: error.message || "Не удалось загрузить данные из Firestore или кэша",
+        error:
+          error.message || "Не удалось загрузить данные из Firestore или кэша",
         isLoading: false,
       });
     }
@@ -115,7 +124,12 @@ const useDutyStore = create((set, get) => ({
 
   addNewDuties: async (file) => {
     set({ isLoading: true, error: null });
+
     try {
+      if (!navigator.onLine) {
+        throw new Error("Оффлайн-режим: нет соединения с интернетом");
+      }
+
       // Проверка формата файла
       if (!file.name.endsWith(".xlsx")) {
         throw new Error("File must be an Excel (.xlsx)");
