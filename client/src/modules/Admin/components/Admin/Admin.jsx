@@ -15,14 +15,14 @@ function Admin() {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    const file = event.target.elements.excelFile.files[0]; // Получаем файл из input
+    const file = event.target.elements.excelFile.files[0]; 
     if (!file) {
       addMessage("Пожалуйста, выберите файл");
       return;
     }
 
     try {
-      const res = await addNewDuties(file); // Передаем файл напрямую
+      const res = await addNewDuties(file); 
       addMessage(res.message);
     } catch (err) {
       addMessage("Ошибка загрузки: " + err.message);

@@ -9,10 +9,6 @@ import AdminWrapper from "../../pages/AdminWrapper/AdminWrapper";
 
 import { PublicRoute, ProtectedRoute } from "../../modules/Auth";
 
-import Loader from "../../shared/components/UI/Loader/Loader";
-
-import useValidateISODate from "../../shared/hooks/useValidateISODate";
-
 const today = format(new Date(), "yyyy-MM-dd");
 
 export const routeConfig = [

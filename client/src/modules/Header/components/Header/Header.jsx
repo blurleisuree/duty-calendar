@@ -9,7 +9,7 @@ import exit from "@assets/icons/exit.svg";
 
 import { useParams, Link, useLocation } from "react-router";
 import useOpenExitModal from "@shared/hooks/useOpenExitModal.jsx";
-import useAuthStore from "../../../Auth/store/authStore.js";
+import {useAuthStore} from "../../../Auth/index";
 
 function Header() {
   const logout = useAuthStore((state) => state.logout);

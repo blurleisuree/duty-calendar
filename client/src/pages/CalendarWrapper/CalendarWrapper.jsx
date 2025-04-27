@@ -3,7 +3,7 @@ import { Calendar } from "@modules/Calendar/index";
 function CalendarWrapper() {
   return (
     <div>
-      <Calendar />
+      <Calendar/>
     </div>
   );
 }
