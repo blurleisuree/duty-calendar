@@ -10,6 +10,8 @@ function OrgSelectorElem({ org, toggleDropDown }) {
     setActiveOrg(org || "Все организации");
     toggleDropDown();
   });
+  
+if (org === null) return null
 
   return (
     <div
