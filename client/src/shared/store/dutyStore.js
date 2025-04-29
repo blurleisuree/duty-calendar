@@ -66,7 +66,7 @@ const useDutyStore = create((set, get) => ({
       document.startViewTransition(() => {
         set({ duties: dutiesData, isLoading: false });
       });
-      console.log({ duties: dutiesData });
+  
       return dutiesData;
     } catch (error) {
       console.error("Error fetching duties from Firestore:", error);

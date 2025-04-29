@@ -51,15 +51,21 @@ function Item() {
   const shouldRenderServices =
     activeCategory === "all" || activeCategory === "services";
 
-  if (isDateInvalid) return <ErrorScreen>Неправильный формат даты</ErrorScreen>;
+  const shouldRenderAll = !filteredDuties.length && !servicesArr.length;
 
-  if (!filteredDuties.length)
-    return <ErrorScreen>На данную дату нет данных</ErrorScreen>;
+  if (isDateInvalid) return <ErrorScreen>Неправильный формат даты</ErrorScreen>;
 
   return (
     <div className="pb-10 min-h-screen" {...handlers}>
       <DateTitle date={date} />
-      <ItemFilter />
+      {/* Переделать */}
+      {shouldRenderAll && <ErrorScreen>На данную дату нет данных</ErrorScreen>}
+      {!shouldRenderAll && (
+        <ItemFilter
+          dutiesIsExists={filteredDuties.length}
+          servicesIsExists={servicesArr.length}
+        />
+      )}
       {shouldRenderDuties &&
         filteredDuties.map((duty) => <ItemData key={duty.id} duty={duty} />)}
       {shouldRenderServices &&
