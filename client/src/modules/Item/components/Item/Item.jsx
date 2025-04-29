@@ -4,10 +4,12 @@ import { useParams } from "react-router";
 import useOrgStore from "@shared/store/orgStore";
 import useDutyStore from "@shared/store/dutyStore";
 import useValidateIsoDate from "@shared/hooks/useValidateISODate";
+import useItemStore from "../../store/itemStore";
 
 import DateTitle from "../DateTitle/DateTitle";
 import ItemData from "../ItemData/ItemData";
 import ErrorPath from "../ErrorPath/ErrorPath";
+import ItemFilter from "../ItemFilter/ItemFilter";
 import ErrorScreen from "@shared/components/UI/ErrorScreen/ErrorScreen";
 
 import useChangeDay from "../../hooks/useChangeDay";
@@ -18,13 +20,21 @@ function Item() {
   const { date } = useParams();
   const isDateInvalid = !useValidateIsoDate(date);
 
+  const activeCategory = useItemStore((state) => state.activeCategory);
+
   const activeOrg = useOrgStore((state) => state.activeOrg);
   const getDuties = useDutyStore((state) => state.getDuties);
+  const getServices = useDutyStore((state) => state.getServices);
 
   const filteredDuties = useMemo(() => {
     if (isDateInvalid) return [];
     return getDuties(activeOrg === "Все организации" ? "" : activeOrg, date);
   }, [activeOrg, date, getDuties, isDateInvalid]);
+
+  const servicesArr = useMemo(() => {
+    if (isDateInvalid) return [];
+    return getServices(activeOrg === "Все организации" ? "" : activeOrg);
+  }, [activeOrg, getServices, isDateInvalid]);
 
   const changeDay = useChangeDay();
   const withTransition = useViewTransition();
@@ -35,18 +45,27 @@ function Item() {
     preventScrollOnSwipe: true,
   });
 
+  const shouldRenderDuties =
+    activeCategory === "all" || activeCategory === "operators";
+
+  const shouldRenderServices =
+    activeCategory === "all" || activeCategory === "services";
+
   if (isDateInvalid) return <ErrorScreen>Неправильный формат даты</ErrorScreen>;
+
+  if (!filteredDuties.length)
+    return <ErrorScreen>На данную дату нет данных</ErrorScreen>;
 
   return (
     <div className="pb-10 min-h-screen" {...handlers}>
       <DateTitle date={date} />
-      {filteredDuties.length ? (
-        filteredDuties.map((duty) => {
-          return <ItemData duty={duty} key={duty.id} />;
-        })
-      ) : (
-        <ErrorScreen>На данную дату нет данных</ErrorScreen>
-      )}
+      <ItemFilter />
+      {shouldRenderDuties &&
+        filteredDuties.map((duty) => <ItemData key={duty.id} duty={duty} />)}
+      {shouldRenderServices &&
+        servicesArr.map((duty) => (
+          <ItemData key={duty.id} duty={duty} services={true} />
+        ))}
     </div>
   );
 }

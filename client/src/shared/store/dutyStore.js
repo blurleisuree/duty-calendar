@@ -57,15 +57,16 @@ const useDutyStore = create((set, get) => ({
         localStorage.setItem("dutiesData", JSON.stringify(cache));
         console.log("Data fetched from Firestore and cached");
       }
-      
+
       if (!document.startViewTransition) {
-        set({ duties: dutiesData,  isLoading:false });
+        set({ duties: dutiesData, isLoading: false });
         return;
       }
 
       document.startViewTransition(() => {
-        set({ duties: dutiesData, isLoading:false });
+        set({ duties: dutiesData, isLoading: false });
       });
+      console.log({ duties: dutiesData });
       return dutiesData;
     } catch (error) {
       console.error("Error fetching duties from Firestore:", error);
@@ -120,6 +121,18 @@ const useDutyStore = create((set, get) => ({
       filteredDuties = filteredDuties.filter((duty) => duty.date === date);
     }
     return filteredDuties;
+  },
+
+  getServices: (organization) => {
+    let servicesList = get().duties;
+    if (!Array.isArray(servicesList)) return [];
+    servicesList = servicesList.filter((duty) => duty.date === null);
+    if (organization) {
+      servicesList = servicesList.filter(
+        (duty) => duty.organization === organization
+      );
+    }
+    return servicesList;
   },
 
   addNewDuties: async (file) => {
