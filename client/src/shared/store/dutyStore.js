@@ -3,6 +3,11 @@ import { collection, getDocs, deleteDoc, addDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import * as XLSX from "xlsx";
 
+function capitalizeFirstLetter(str) {
+  if (!str || typeof str !== "string") return str;
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
 const useDutyStore = create((set, get) => ({
   duties: [],
   isLoading: false,
@@ -66,7 +71,7 @@ const useDutyStore = create((set, get) => ({
       document.startViewTransition(() => {
         set({ duties: dutiesData, isLoading: false });
       });
-  
+
       return dutiesData;
     } catch (error) {
       console.error("Error fetching duties from Firestore:", error);
@@ -156,15 +161,32 @@ const useDutyStore = create((set, get) => ({
       const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
       // Обработка данных
-      const duties = data.slice(1).map((row) => ({
-        organization: row[0] ?? null,
-        date: row[1] ? get().convertToISODate(row[1]) : null,
-        timeStart: row[2] ?? null,
-        timeEnd: row[3] ?? null,
-        fullName: row[4] ?? null,
-        position: row[5] ?? null,
-        phone: row[6] ?? null,
-      }));
+      const duties = data.slice(1).map((row) => {
+        const duty = {
+          organization: row[0] ?? null,
+          date: row[1] ? get().convertToISODate(row[1]) : null,
+          timeStart: row[2] ?? null,
+          timeEnd: row[3] ?? null,
+          fullName: row[4] ?? null,
+          position: row[5] ?? null,
+          phone: row[6] ?? 'null',
+        };
+
+        return {
+          ...duty,
+          organization: duty.organization
+            ? capitalizeFirstLetter(String(duty.organization)) : null,
+          phone: duty.phone ? duty.phone.toString().replace(/\s/g, "") : null,
+          position: duty.position ? capitalizeFirstLetter(String(duty.position)) : null,
+          fullName: duty.fullName ? capitalizeFirstLetter(String(duty.fullName)) : null,
+          timeStart: duty.timeStart
+            ? duty.timeStart.toString().padStart(5, "0")
+            : null,
+          timeEnd: duty.timeEnd
+            ? duty.timeEnd.toString().padStart(5, "0")
+            : null,
+        };
+      });
 
       // Работа с Firestore
       if (!db) {

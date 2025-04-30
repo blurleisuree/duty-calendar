@@ -36,7 +36,9 @@ function ItemData({ duty, services = false }) {
   return (
     <>
       <div className="w-full pt-5 pb-5 px-5 font-300 pos-relative">
-        {services && <SubText className="mb-3 text-secondary">Оперативная служба</SubText>}
+        {services && (
+          <SubText className="mb-3 text-secondary">Оперативная служба</SubText>
+        )}
         <SubText>{organization}</SubText>
         {isDetailsActive && (
           <SubText className="mt-3">{services ? "Должность" : "ФИО"}</SubText>
