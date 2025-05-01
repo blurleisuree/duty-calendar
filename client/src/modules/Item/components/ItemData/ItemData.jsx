@@ -7,6 +7,7 @@ import FullName from "../FullName/FullName";
 import Border from "../Border/Border";
 import Time from "../Time/Time";
 import ItemDataElem from "../ItemDataElem/ItemDataElem";
+import Organization from "../Organization/Organization";
 
 import { useState } from "react";
 
@@ -37,11 +38,11 @@ function ItemData({ duty, services = false }) {
 
   return (
     <>
-      <div className="w-full pt-5 pb-5 px-5 font-300 pos-relative">
+      <div className="w-full pt-5 pb-5 px-5 font-300 pos-relative ">
         {services && (
           <SubText className="mb-3 text-secondary">Оперативная служба</SubText>
         )}
-        <SubText>{organization}</SubText>
+        <Organization name={organization} />
         {isDetailsActive && (
           <SubText className="mt-3">{services ? "Должность" : "ФИО"}</SubText>
         )}
@@ -71,18 +72,14 @@ function ItemData({ duty, services = false }) {
                 <SubText className=" mt-3">Должность</SubText>
                 <Text>{position}</Text>
               </ItemDataElem>
-              {!services && (
-                <ItemDataElem>
-                  <SubText className=" mt-3">Время дежурства с:</SubText>
-                  <Time time={timeStart}></Time>
-                </ItemDataElem>
-              )}
-              {!services && (
-                <ItemDataElem>
-                  <SubText className=" mt-3">Время дежурства по:</SubText>
-                  <Time time={timeEnd} />
-                </ItemDataElem>
-              )}
+              <ItemDataElem>
+                <SubText className=" mt-3">Время дежурства с:</SubText>
+                <Time time={timeStart}></Time>
+              </ItemDataElem>
+              <ItemDataElem>
+                <SubText className=" mt-3">Время дежурства по:</SubText>
+                <Time time={timeEnd} />
+              </ItemDataElem>
             </>
           )}
         </div>
