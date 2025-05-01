@@ -42,3 +42,4 @@ firebase-debug.*.log
 .firebase/
 
 .xlsx
+exports
