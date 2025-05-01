@@ -39,13 +39,8 @@ function ItemData({ duty, services = false }) {
   return (
     <>
       <div className="w-full pt-5 pb-5 px-5 font-300 pos-relative ">
-        {services && (
-          <SubText className="mb-3 text-secondary">Оперативная служба</SubText>
-        )}
-        <Organization name={organization} />
-        {isDetailsActive && (
-          <SubText className="mt-3">{services ? "Должность" : "ФИО"}</SubText>
-        )}
+        <Organization name={organization} isDetailsActive={isDetailsActive} />
+        {isDetailsActive && <SubText className="mt-3">ФИО</SubText>}
 
         <div
           className={`flex items-center justify-between w-full ${
@@ -66,11 +61,11 @@ function ItemData({ duty, services = false }) {
             <Phone className="text-right">{phoneDisplay[0]}</Phone>
           )}
 
-          {isDetailsActive && !services && (
+          {isDetailsActive && (
             <>
               <ItemDataElem>
                 <SubText className=" mt-3">Должность</SubText>
-                <Text>{position}</Text>
+                <Text className='leading-7'>{position}</Text>
               </ItemDataElem>
               <ItemDataElem>
                 <SubText className=" mt-3">Время дежурства с:</SubText>
@@ -84,7 +79,11 @@ function ItemData({ duty, services = false }) {
           )}
         </div>
       </div>
-      <Border handleClick={toggleDetails} isDetailsActive={isDetailsActive} />
+      <Border
+        handleClick={toggleDetails}
+        isDetailsActive={isDetailsActive}
+        isServices={services}
+      />
     </>
   );
 }

@@ -1,16 +1,16 @@
 import { useState } from "react";
 import useViewTransition from "@shared/hooks/useViewTransition";
 
-function Organization({ className, name }) {
+function Organization({ className, name, isDetailsActive }) {
   const withTransition = useViewTransition();
   const [isExpanded, setIsExpanded] = useState(false);
 
   const isLongName = name.length > 25;
 
-  if (isLongName) console.log(name);
-
   const displayName =
-    isLongName && !isExpanded ? `${name.slice(0, 20)}...` : name;
+    !isDetailsActive && isLongName && !isExpanded
+      ? `${name.slice(0, 20)}...`
+      : name;
 
   const handleToggle = withTransition(() => {
     if (isLongName) {
@@ -22,7 +22,7 @@ function Organization({ className, name }) {
     <p
       className={`${className} ${
         isLongName ? "cursor-pointer" : "cursor-default"
-      } text-neutral whitespace-pre-wrap`}
+      } text-secondary whitespace-pre-wrap`}
       onClick={handleToggle}
     >
       {displayName}
