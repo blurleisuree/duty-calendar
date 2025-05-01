@@ -7,6 +7,7 @@ import FullName from "../FullName/FullName";
 import Border from "../Border/Border";
 import Time from "../Time/Time";
 import ItemDataElem from "../ItemDataElem/ItemDataElem";
+import Organization from "../Organization/Organization";
 
 import { useState } from "react";
 
@@ -37,14 +38,9 @@ function ItemData({ duty, services = false }) {
 
   return (
     <>
-      <div className="w-full pt-5 pb-5 px-5 font-300 pos-relative">
-        {services && (
-          <SubText className="mb-3 text-secondary">Оперативная служба</SubText>
-        )}
-        <SubText>{organization}</SubText>
-        {isDetailsActive && (
-          <SubText className="mt-3">{services ? "Должность" : "ФИО"}</SubText>
-        )}
+      <div className="w-full pt-5 pb-5 px-5 font-300 pos-relative ">
+        <Organization name={organization} isDetailsActive={isDetailsActive} />
+        {isDetailsActive && <SubText className="mt-3">ФИО</SubText>}
 
         <div
           className={`flex items-center justify-between w-full ${
@@ -52,15 +48,19 @@ function ItemData({ duty, services = false }) {
           }`}
         >
           {!services ? (
-            <FullName fullName={fullName} isFull={isDetailsActive} />
+            <FullName
+              className="pr-6 text-balance"
+              fullName={fullName}
+              isFull={isDetailsActive}
+            />
           ) : (
-            <Text>{position}</Text>
+            <Text className="pr-6 text-balance">{position}</Text>
           )}
           {isDetailsActive && (
             <SubText className=" mt-3">Номер телефона</SubText>
           )}
           {isDetailsActive ? (
-            phoneDisplay.map((phone) => <Phone>{phone}</Phone>)
+            phoneDisplay.map((phone) => <Phone key={phone}>{phone}</Phone>)
           ) : (
             <Phone className="text-right">{phoneDisplay[0]}</Phone>
           )}
@@ -68,30 +68,26 @@ function ItemData({ duty, services = false }) {
           {isDetailsActive && (
             <>
               <ItemDataElem>
-                <SubText className=" mt-3">
-                  {services ? "ФИО" : "Должность"}
-                </SubText>
-                <Text>
-                  {services ? (fullName ? fullName : "Не указано") : position}
-                </Text>
+                <SubText className=" mt-3">Должность</SubText>
+                <Text className="leading-7">{position}</Text>
               </ItemDataElem>
-              {!services && (
-                <ItemDataElem>
-                  <SubText className=" mt-3">Время дежурства с:</SubText>
-                  <Time time={timeStart}></Time>
-                </ItemDataElem>
-              )}
-              {!services && (
-                <ItemDataElem>
-                  <SubText className=" mt-3">Время дежурства по:</SubText>
-                  <Time time={timeEnd} />
-                </ItemDataElem>
-              )}
+              <ItemDataElem>
+                <SubText className=" mt-3">Время дежурства с:</SubText>
+                <Time time={timeStart}></Time>
+              </ItemDataElem>
+              <ItemDataElem>
+                <SubText className=" mt-3">Время дежурства по:</SubText>
+                <Time time={timeEnd} />
+              </ItemDataElem>
             </>
           )}
         </div>
       </div>
-      <Border handleClick={toggleDetails} isDetailsActive={isDetailsActive} />
+      <Border
+        handleClick={toggleDetails}
+        isDetailsActive={isDetailsActive}
+        isServices={services}
+      />
     </>
   );
 }

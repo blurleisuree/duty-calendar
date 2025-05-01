@@ -28,7 +28,7 @@ export const routeConfig = [
         path: "/",
         element: <Main />,
         children: [
-          { path: "", element: <Navigate to={`calendar/${today}`} replace /> },
+          { path: "", element: <Navigate to={`calendar`} replace /> },
           { path: "calendar", element: <Calendar /> },
           { path: "calendar/:date", element: <Item /> },
           { path: "admin", element: <Admin /> },
