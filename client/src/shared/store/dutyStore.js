@@ -5,8 +5,17 @@ import * as XLSX from "xlsx";
 
 function capitalizeFirstLetter(str) {
   if (!str || typeof str !== "string") return str;
-  return str.charAt(0).toUpperCase() + str.slice(1)
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+const formatPhone = (phone) => {
+  if (!phone) return null;
+  const phoneStr = String(phone);
+  return phoneStr
+    .split(",")
+    .map((num) => num.trim().replace(/\s/g, ""))
+    .filter((num) => num);
+};
 
 const useDutyStore = create((set, get) => ({
   duties: [],
@@ -169,16 +178,21 @@ const useDutyStore = create((set, get) => ({
           timeEnd: row[3] ?? null,
           fullName: row[4] ?? null,
           position: row[5] ?? null,
-          phone: row[6] ?? 'null',
+          phone: row[6] ?? null,
         };
 
         return {
           ...duty,
           organization: duty.organization
-            ? capitalizeFirstLetter(String(duty.organization)) : null,
-          phone: duty.phone ? duty.phone.toString().replace(/\s/g, "") : null,
-          position: duty.position ? capitalizeFirstLetter(String(duty.position)) : null,
-          fullName: duty.fullName ? capitalizeFirstLetter(String(duty.fullName)) : null,
+            ? capitalizeFirstLetter(String(duty.organization))
+            : null,
+          phone: formatPhone(duty.phone),
+          position: duty.position
+            ? capitalizeFirstLetter(String(duty.position))
+            : null,
+          fullName: duty.fullName
+            ? capitalizeFirstLetter(String(duty.fullName))
+            : null,
           timeStart: duty.timeStart
             ? duty.timeStart.toString().padStart(5, "0")
             : null,
