@@ -16,7 +16,7 @@ if (org === null) return null
   return (
     <div
       onClick={handleClick}
-      className=" flex items-center py-4 px-6 font-300 text-primary text-lg cursor-pointer hover:bg-blue-100 transition bg-blue-100 bg-transparent"
+      className="max-w-screen flex items-center py-4 px-6 font-300 text-primary text-lg cursor-pointer hover:bg-blue-100 transition bg-blue-100 bg-transparent"
     >
       {org}
     </div>

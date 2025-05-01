@@ -31,16 +31,21 @@ function ItemData({ duty, services = false }) {
     timeEnd = "",
   } = duty || {};
 
+  const phoneDisplay = Array.isArray(phone) ? phone : ["Нет номера"];
+
   if (!position && !fullName) return null;
 
   return (
     <>
       <div className="w-full pt-5 pb-5 px-5 font-300 pos-relative">
-        {services && <SubText className="mb-3 text-secondary">Оперативная служба</SubText>}
+        {services && (
+          <SubText className="mb-3 text-secondary">Оперативная служба</SubText>
+        )}
         <SubText>{organization}</SubText>
         {isDetailsActive && (
           <SubText className="mt-3">{services ? "Должность" : "ФИО"}</SubText>
         )}
+
         <div
           className={`flex items-center justify-between w-full ${
             isDetailsActive ? "mt-1 flex-col items-baseline" : "mt-3"
@@ -54,7 +59,12 @@ function ItemData({ duty, services = false }) {
           {isDetailsActive && (
             <SubText className=" mt-3">Номер телефона</SubText>
           )}
-          <Phone>{phone}</Phone>
+          {isDetailsActive ? (
+            phoneDisplay.map((phone) => <Phone>{phone}</Phone>)
+          ) : (
+            <Phone className="text-right">{phoneDisplay[0]}</Phone>
+          )}
+
           {isDetailsActive && (
             <>
               <ItemDataElem>

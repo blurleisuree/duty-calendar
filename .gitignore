@@ -15,6 +15,7 @@ client/build/          # Сборка React
 client/dist/           # Если используется dist
 client/public/*.log
 .vite/
+client/dev-dist
 
 # Для server
 server/dist/           # Скомпилированные файлы сервера

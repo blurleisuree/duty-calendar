@@ -44,11 +44,6 @@ function MainPage() {
           {offlineMessage}
         </div>
       )}
-      {error && !offlineMessage && (
-        <div style={{ padding: "10px", background: "#f44336", color: "#fff" }}>
-          Ошибка: {error}
-        </div>
-      )}
       <Header />
       <Outlet />
     </div>
