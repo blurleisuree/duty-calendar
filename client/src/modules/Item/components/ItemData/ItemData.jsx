@@ -48,9 +48,13 @@ function ItemData({ duty, services = false }) {
           }`}
         >
           {!services ? (
-            <FullName fullName={fullName} isFull={isDetailsActive} />
+            <FullName
+              className="pr-6 text-balance"
+              fullName={fullName}
+              isFull={isDetailsActive}
+            />
           ) : (
-            <Text>{position}</Text>
+            <Text className="pr-6 text-balance">{position}</Text>
           )}
           {isDetailsActive && (
             <SubText className=" mt-3">Номер телефона</SubText>
@@ -65,7 +69,7 @@ function ItemData({ duty, services = false }) {
             <>
               <ItemDataElem>
                 <SubText className=" mt-3">Должность</SubText>
-                <Text className='leading-7'>{position}</Text>
+                <Text className="leading-7">{position}</Text>
               </ItemDataElem>
               <ItemDataElem>
                 <SubText className=" mt-3">Время дежурства с:</SubText>
