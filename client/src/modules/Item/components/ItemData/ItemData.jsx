@@ -60,20 +60,16 @@ function ItemData({ duty, services = false }) {
             <SubText className=" mt-3">Номер телефона</SubText>
           )}
           {isDetailsActive ? (
-            phoneDisplay.map((phone) => <Phone>{phone}</Phone>)
+            phoneDisplay.map((phone) => <Phone key={phone}>{phone}</Phone>)
           ) : (
             <Phone className="text-right">{phoneDisplay[0]}</Phone>
           )}
 
-          {isDetailsActive && (
+          {isDetailsActive && !services && (
             <>
               <ItemDataElem>
-                <SubText className=" mt-3">
-                  {services ? "ФИО" : "Должность"}
-                </SubText>
-                <Text>
-                  {services ? (fullName ? fullName : "Не указано") : position}
-                </Text>
+                <SubText className=" mt-3">Должность</SubText>
+                <Text>{position}</Text>
               </ItemDataElem>
               {!services && (
                 <ItemDataElem>
