@@ -26,7 +26,7 @@ function OrgSelector() {
   }, [getAllOrgs, duties]);
 
   return (
-    <div className="relative h-min mt-5" onClick={toggleDropDown}>
+    <div className="relative h-min mt-5 max-w-screen" onClick={toggleDropDown}>
       <div className="inline-flex items-center w-full justify-center text-xl text-active font-300 cursor-pointer active:opacity-40 transition">
         {activeOrg}
         <img src={arrow} alt="arrow" className="ml-1" />
