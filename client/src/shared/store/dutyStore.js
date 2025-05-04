@@ -172,17 +172,25 @@ const useDutyStore = create((set, get) => ({
       // Обработка данных
       const duties = data.slice(1).map((row) => {
         const duty = {
-          organization: row[0] ?? null,
-          date: row[1] ? get().convertToISODate(row[1]) : null,
-          timeStart: row[2] ?? null,
-          timeEnd: row[3] ?? null,
-          fullName: row[4] ?? null,
-          position: row[5] ?? null,
-          phone: row[6] ?? null,
+          category: row[0] ?? null,
+          subcategory: row[1] ?? null,
+          organization: row[2] ?? null,
+          date: row[3] ? get().convertToISODate(row[3]) : null,
+          timeStart: row[4] ?? null,
+          timeEnd: row[5] ?? null,
+          fullName: row[6] ?? null,
+          position: row[7] ?? null,
+          phone: row[8] ?? null,
         };
 
         return {
           ...duty,
+          category: duty.category
+            ? capitalizeFirstLetter(String(duty.category))
+            : null,
+          subcategory: duty.subcategory
+            ? capitalizeFirstLetter(String(duty.subcategory))
+            : null,
           organization: duty.organization
             ? capitalizeFirstLetter(String(duty.organization))
             : null,
@@ -201,7 +209,7 @@ const useDutyStore = create((set, get) => ({
             : null,
         };
       });
-
+console.log(duties)
       // Работа с Firestore
       if (!db) {
         throw new Error("Firestore db is not initialized");
