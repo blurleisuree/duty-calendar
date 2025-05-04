@@ -30,7 +30,7 @@ function Item() {
     if (isDateInvalid) return [];
     return getDuties(activeOrg === "Все организации" ? "" : activeOrg, date);
   }, [activeOrg, date, getDuties, isDateInvalid]);
-
+  
   const servicesArr = useMemo(() => {
     if (isDateInvalid) return [];
     return getServices(activeOrg === "Все организации" ? "" : activeOrg);
