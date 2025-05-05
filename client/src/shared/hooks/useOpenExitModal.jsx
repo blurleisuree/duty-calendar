@@ -19,13 +19,13 @@ function useOpenExitModal(logout) {
         <div className="mt-6 flex">
           <Button
             onClick={closeModal}
-            className="py-2 px-7 bg-none border-2 border-active important:text-active font-500"
+            className="py-2 px-7 border-2 border-active text-active font-500 text-sm"
           >
             Отмена
           </Button>
           <Button
             onClick={exit}
-            className="py-2 px-7 ml-4 bg-none border-2 border-secondary important:text-secondary font-500"
+            className="py-2 px-7 ml-4 border-2 border-secondary text-secondary font-500 text-sm"
           >
             Выйти
           </Button>

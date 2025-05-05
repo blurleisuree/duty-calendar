@@ -49,7 +49,7 @@ function AuthForm() {
       >
         Пароль
       </PassInput>
-      <Button type="submit" className="w-full py-3 mt-4 " disabled={loading}>
+      <Button withGradient={true} type="submit" className="w-full py-3 mt-4 text-white" disabled={loading}>
         Войти
       </Button>
       <Error className="mt-3">{error}</Error>
