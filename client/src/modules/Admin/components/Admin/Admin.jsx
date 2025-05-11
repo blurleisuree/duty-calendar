@@ -52,7 +52,7 @@ function Admin() {
           xlsx, xls (макс. 3MB)
         </SubText>
         <Error>{error}</Error>
-        <Button type="submit" className="mt-4" disabled={isLoading}>
+        <Button type="submit" className="text-sm mt-4 text-white" withGradient={true} disabled={isLoading}>
           {isLoading ? "Загрузка..." : "Загрузить"}
         </Button>
       </form>
