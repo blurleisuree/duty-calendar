@@ -1,17 +1,18 @@
 import useCategoryStore from "../../store/categoryStore";
 
-import CategorySelectList from "../CategorySelectList/CategorySelectList";
-import CategoryModalTitle from "../CategoryModalTitle/CategoryModalTitle";
-import Button from "@shared/components/UI/Button";
+import CategoryMain from "../CategoryMain/CategoryMain";
 
 function CategoryModal() {
-  const { modalIsActive } = useCategoryStore();
+  const { modalIsActive, closeModal } = useCategoryStore();
 
   return (
-    <div className={`${!modalIsActive ? "hidden" : ""} flex p-3 h-85% w-full rounded-t-lg`}>
-      <CategoryModalTitle />
-      <CategorySelectList />
-      <Button>Применить</Button>
+    <div
+      onClick={closeModal}
+      className={`${
+        !modalIsActive ? "hidden" : ""
+      } w-full h-full overflow-hidden fixed block z-50 pt-32 bg-black bg-opacity-50 inset-0`}
+    >
+      <CategoryMain />
     </div>
   );
 }

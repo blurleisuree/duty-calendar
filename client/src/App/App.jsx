@@ -9,6 +9,7 @@ import Modal from "@shared/components/Modal/Modal.jsx";
 import Loader from "@shared/components/UI/Loader/Loader.jsx";
 
 import { useAuthStore } from "@modules/Auth/index";
+import { CategoryModal } from "@modules/Category/index";
 
 function App() {
   const initializeAuth = useAuthStore((state) => state.initializeAuth);
@@ -23,9 +24,10 @@ function App() {
   }
 
   return (
-    <div className={`${classes.App}`}>
+    <div className={`${classes.App} relative`}>
       <Modal />
       <Message />
+      <CategoryModal />
       <Router />
     </div>
   );

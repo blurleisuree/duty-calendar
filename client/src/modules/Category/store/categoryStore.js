@@ -21,7 +21,18 @@ const useCategoryStore = create((set) => ({
         organisation: duty.organization,
       };
     });
+
+    // const uniqueCategories = Array.from(
+    //   new Map(
+    //     all.map((item) => [
+    //       `${item.category}|${item.subcategory}|${item.organisation}`,
+    //       item,
+    //     ])
+    //   ).values()
+    // );
     // all.push("Все организации");
+
+    // set({ categories: uniqueCategories });
     set({ categories: [...new Set(all)] });
   },
 }));

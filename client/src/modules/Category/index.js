@@ -1,1 +1,2 @@
-export { default as Category } from './components/Category/Category'
+export { default as CategoryTrigger } from "./components/CategoryTrigger/CategoryTrigger";
+export { default as CategoryModal } from "./components/CategoryModal/CategoryModal";

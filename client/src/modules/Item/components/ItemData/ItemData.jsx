@@ -38,7 +38,7 @@ function ItemData({ duty, services = false }) {
 
   return (
     <>
-      <div className="w-full pt-5 pb-5 px-5 font-300 pos-relative ">
+      <div className="w-full pt-5 pb-5 px-5 font-300">
         <Organization name={organization} isDetailsActive={isDetailsActive} />
         {isDetailsActive && <SubText className="mt-3">ФИО</SubText>}
 

@@ -209,7 +209,7 @@ const useDutyStore = create((set, get) => ({
             : null,
         };
       });
-console.log(duties)
+      console.log(duties);
       // Работа с Firestore
       if (!db) {
         throw new Error("Firestore db is not initialized");

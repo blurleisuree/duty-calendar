@@ -1,10 +1,17 @@
+import { useEffect } from "react";
 import useCategoryStore from "../../store/categoryStore";
+import useDutyStore from "../../../../shared/store/dutyStore";
 
-function CategorySelectList() {
-  const { categories } = useCategoryStore();
-  console.log(categories);
+function CategorySelectList({className}) {
+  const duties = useDutyStore((state) => state.duties);
+  const { categories, getAllCategories } = useCategoryStore();
+
+  useEffect(() => {
+    getAllCategories(duties);
+  }, [duties, getAllCategories]);
+  // console.log(categories);
   return (
-    <div className="mt-3">
+    <div className={`${className} mt-10`}>
       <div></div>
     </div>
   );
